@@ -1,5 +1,5 @@
 
-export type Currency = 'USD' | 'GBP' | 'EUR' | 'PKR';
+export type Currency = 'USD' | 'GBP' | 'EUR' | 'PKR' | 'INR' | 'AUD' | 'CAD' | 'JPY' | 'AED';
 
 export interface Package {
   name: 'Basic' | 'Standard' | 'Premium';

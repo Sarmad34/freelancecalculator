@@ -21,11 +21,11 @@ export const PAGES: Record<string, PageSEO> = {
   "/": {
     path: "/",
     title: "Freelance Calculator: The Financial Suite for the 2026 Economy",
-    description: "Calculate your true value in 2026. Data-driven business modeling for hourly rates, Day rates, AI project quotes, and tax reserves.",
+    description: "Calculate your true value in 2026. Data-driven business modeling for hourly rates, Day rates, and tax reserves.",
     h1: "The Definitive Freelance Financial Suite",
     intro: [
       "The freelance economy is undergoing a massive shift. In 2026, simply matching a corporate salary is no longer enough to build a sustainable career. You are a business, and businesses require margins, buffers, and reinvestment strategies.",
-      "FreelanceCalc is a production-quality financial engineering tool. We've moved beyond simple multiplication to provide a holistic view of your business health, from utilization audits to value-based project pricing."
+      "FreelanceCalc is a production-quality financial engineering tool. We've moved beyond simple multiplication to provide a holistic view of your business health, from utilization audits to tax strategy."
     ],
     sections: [
       {
@@ -39,7 +39,10 @@ export const PAGES: Record<string, PageSEO> = {
     faqs: [
       { q: "Why do I need a 2026-specific calculator?", a: "The 2026 economy reflects higher SaaS overheads and shifting self-employment tax brackets. Standard calculators use outdated 2020 logic that leads to profit leakage." },
       { q: "What is the 'Utilization Gap'?", a: "Standard calculators assume you bill 40 hours a week. In reality, most high-performing freelancers only bill 22-26 hours. Our model accounts for this 40% non-billable gap." },
-      { q: "Is my financial data secure?", a: "100%. We use local browser processing. Your inputs never touch a server unless you explicitly use our AI features for custom project quotes." }
+      { q: "Is my financial data secure?", a: "100%. We use local browser processing. Your inputs never touch a server, ensuring total privacy." },
+      { q: "How should I handle 2026 inflation?", a: "We recommend a 5-7% annual 'Cost of Living Adjustment' (COLA) built directly into your profit margin. Our tools help you find the surplus needed to stay ahead of currency devaluation." },
+      { q: "What is a 'Safety Buffer' in pricing?", a: "A Safety Buffer is a 15-20% markup applied to fixed-price or day-rate quotes. It covers 'Scope Seep'—the small, unrecorded tasks that eat into your profit margins." },
+      { q: "Why is a Day Rate better than Hourly?", a: "Day rates decouple your income from minutes. They discourage client micromanagement and reward your efficiency. If a task takes 4 hours instead of 8, your day rate ensures you capture that expert efficiency as profit." }
     ],
     related: [...TOOL_LINKS, ...GUIDE_LINKS.slice(0, 3)],
     schemaHints: ["WebSite", "FinancialService", "FAQPage"],
@@ -59,16 +62,16 @@ export const PAGES: Record<string, PageSEO> = {
     schemaHints: ["FinancialService"],
     lastUpdated: "2026-01-01"
   },
-  "/project-quote-calculator": {
-    path: "/project-quote-calculator",
-    title: "AI Project Quote Builder | Tiered Pricing Architect",
-    description: "Generate professional, tiered project quotes with AI. Move from hourly billing to value-based pricing for better freelance margins.",
-    h1: "Project Quote Builder",
-    intro: ["Stop guessing project costs. Use our AI-driven engine to architect tiered proposals that offer clients choice and maximize your project value."],
+  "/day-rate-architect": {
+    path: "/day-rate-architect",
+    title: "Day Rate & Weekly Architect | Freelance Value Pricing",
+    description: "Architect your transition from hourly billing to high-value day rates and weekly blocks. Calculate buffers for 2026 market standards.",
+    h1: "Day Rate & Weekly Architect",
+    intro: ["Stop selling minutes and start selling results. Use this tool to model how day-rates and weekly 'Sprints' can double your effective hourly rate while simplifying client management."],
     sections: [],
     faqs: [],
     related: TOOL_LINKS,
-    schemaHints: ["SoftwareApplication"],
+    schemaHints: ["FinancialService"],
     lastUpdated: "2026-01-01"
   },
   "/overhead-expense-calculator": {

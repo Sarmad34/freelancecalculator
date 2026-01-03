@@ -56,8 +56,8 @@ const GuideFixedVsHourly = () => (
     <div className="mt-16 p-10 bg-slate-900 text-white rounded-[2.5rem] shadow-xl">
       <h3 className="text-2xl font-black mb-4">Protect Your Margin</h3>
       <p className="text-slate-400 mb-8 font-medium">Never send a fixed price quote without first modeling your internal effort and overhead.</p>
-      <Link to="/project-quote-calculator" className="inline-block px-8 py-4 bg-blue-600 text-white rounded-2xl no-underline font-bold hover:bg-blue-700 transition-all">
-        Build a Tiered Project Quote
+      <Link to="/day-rate-architect" className="inline-block px-8 py-4 bg-blue-600 text-white rounded-2xl no-underline font-bold hover:bg-blue-700 transition-all">
+        Architect Your Day Rates
       </Link>
     </div>
   </article>

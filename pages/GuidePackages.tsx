@@ -56,8 +56,8 @@ const GuidePackages = () => (
     </div>
 
     <div className="flex flex-col items-center mt-16 pt-8 border-t border-slate-100">
-      <Link to="/project-quote-calculator" className="inline-block px-10 py-5 bg-blue-600 text-white rounded-2xl no-underline font-black uppercase tracking-[0.2em] text-xs hover:bg-blue-700 shadow-2xl shadow-blue-200 transition-all active:scale-95">
-        Architect Package Tiers with AI
+      <Link to="/hourly-rate-calculator" className="inline-block px-10 py-5 bg-blue-600 text-white rounded-2xl no-underline font-black uppercase tracking-[0.2em] text-xs hover:bg-blue-700 shadow-2xl shadow-blue-200 transition-all active:scale-95">
+        Audit My Billable Rates
       </Link>
       <p className="text-[10px] text-slate-400 mt-6 font-black uppercase tracking-[0.3em] italic">Proprietary Pricing Logic • 2026 Benchmarks</p>
     </div>

@@ -1,7 +1,7 @@
 
 export const TOOL_LINKS = [
   { href: "/hourly-rate-calculator", label: "Hourly Rate Calculator" },
-  { href: "/project-quote-calculator", label: "Project Quote Calculator" },
+  { href: "/day-rate-architect", label: "Day Rate & Weekly Architect" },
   { href: "/retainer-calculator", label: "Retainer Calculator" },
   { href: "/overhead-expense-calculator", label: "Overhead Auditor" },
   { href: "/platform-fee-calculator", label: "Platform Fee Calculator" },

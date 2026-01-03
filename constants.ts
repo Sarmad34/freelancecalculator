@@ -3,8 +3,13 @@ import { Currency } from './types';
 
 export const CURRENCIES: { label: string; value: Currency; symbol: string }[] = [
   { label: 'USD ($)', value: 'USD', symbol: '$' },
-  { label: 'GBP (£)', value: 'GBP', symbol: '£' },
   { label: 'EUR (€)', value: 'EUR', symbol: '€' },
+  { label: 'GBP (£)', value: 'GBP', symbol: '£' },
+  { label: 'INR (₹)', value: 'INR', symbol: '₹' },
+  { label: 'AUD (A$)', value: 'AUD', symbol: 'A$' },
+  { label: 'CAD (C$)', value: 'CAD', symbol: 'C$' },
+  { label: 'JPY (¥)', value: 'JPY', symbol: '¥' },
+  { label: 'AED (د.إ)', value: 'AED', symbol: 'AED' },
   { label: 'PKR (₨)', value: 'PKR', symbol: '₨' },
 ];
 

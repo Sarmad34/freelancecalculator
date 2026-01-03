@@ -2,13 +2,22 @@
 import React, { useState } from 'react';
 
 export const Card: React.FC<{ children: React.ReactNode; className?: string; variant?: 'glass' | 'flat' | 'outline' }> = ({ children, className = "", variant = 'flat' }) => {
-  const variants = {
+  const baseClasses = "rounded-3xl border shadow-sm overflow-hidden";
+  const variantClasses = {
     flat: "bg-white border-slate-200",
     glass: "glass-card",
     outline: "bg-transparent border-slate-200 border-dashed"
   };
+
+  // Prevent background conflicts: if className contains a background utility, 
+  // we strip the default bg-white from the variant string.
+  let activeVariantClasses = variantClasses[variant];
+  if (className.includes('bg-')) {
+    activeVariantClasses = activeVariantClasses.replace('bg-white', '');
+  }
+
   return (
-    <div className={`rounded-3xl border shadow-sm overflow-hidden ${variants[variant]} ${className}`}>
+    <div className={`${baseClasses} ${activeVariantClasses} ${className}`}>
       {children}
     </div>
   );

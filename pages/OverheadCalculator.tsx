@@ -57,7 +57,6 @@ BREAKDOWN:
         </div>
         <div className="flex gap-3">
           <CopyButton text={auditReport} />
-          <Button variant="outline" onClick={() => window.print()} className="!px-4 !py-2 !text-xs">Save PDF</Button>
         </div>
       </div>
 
