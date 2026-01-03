@@ -10,13 +10,10 @@ export const generateProjectQuote = async (params: {
   complexity: string;
   currency: Currency;
 }): Promise<{ quote: ProjectQuoteResult; copy: CopyBlocks }> => {
-  // Use the API key directly from process.env.API_KEY as required by guidelines
-  if (!process.env.API_KEY) {
-    throw new Error("Missing API_KEY. Please check your environment variables.");
-  }
-
+  // Use a fresh instance right before the call to ensure the latest API Key is used
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-  const model = "gemini-3-flash-preview";
+  // Using gemini-3-pro-preview for complex business strategy and structured JSON generation
+  const model = "gemini-3-pro-preview";
 
   const prompt = `Act as a senior freelance business strategist. Generate a high-fidelity project proposal for a ${params.role} conducting a ${params.projectType} project.
   
@@ -98,10 +95,13 @@ export const generateProjectQuote = async (params: {
     });
 
     const text = response.text;
-    if (!text) throw new Error("Empty AI response");
+    if (!text) throw new Error("The AI returned an empty response. Please try again.");
     return JSON.parse(text);
   } catch (e: any) {
-    console.error("AI Quote Error:", e);
-    throw new Error(e.message || "Failed to generate AI quote.");
+    console.error("Gemini API Error:", e);
+    if (e.message?.includes("entity was not found")) {
+      throw new Error("API Key session expired or invalid. Please refresh and re-select your key.");
+    }
+    throw new Error(e.message || "Failed to communicate with the pricing engine.");
   }
 };

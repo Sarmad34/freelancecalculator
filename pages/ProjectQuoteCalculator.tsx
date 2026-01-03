@@ -7,6 +7,8 @@ import { Currency, ProjectQuoteResult, CopyBlocks } from '../types';
 import { generateProjectQuote } from '../services/geminiService';
 import { formatCurrency } from '../services/calculations';
 
+// No need to declare window.aistudio as it is already provided by the platform environment
+
 const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) => {
   const { role: roleSlug } = useParams();
   const [loading, setLoading] = useState(false);
@@ -42,7 +44,20 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
     setLoading(true);
     setError(null);
     setSelectedTier(null);
+
     try {
+      // Check if we need to prompt for an API key (Live Domain Requirement)
+      /* @ts-ignore - aistudio is injected by the platform */
+      if (window.aistudio) {
+        /* @ts-ignore */
+        const hasKey = await window.aistudio.hasSelectedApiKey();
+        if (!hasKey) {
+          /* @ts-ignore */
+          await window.aistudio.openSelectKey();
+          // Instructions suggest proceeding directly after opening
+        }
+      }
+
       const data = await generateProjectQuote({
         role: form.role,
         projectType: form.projectType,
@@ -52,10 +67,13 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
         currency
       });
       setResult(data);
-      // Default to Standard tier selection
       setSelectedTier('Standard');
     } catch (err: any) {
-      setError(err.message || "An unexpected error occurred while generating the quote.");
+      let msg = err.message || "An unexpected error occurred.";
+      if (msg.includes("API_KEY")) {
+        msg = "AI configuration required. Please ensure you have selected a valid API key in the platform settings.";
+      }
+      setError(msg);
       console.error("Quote Generation Error:", err);
     } finally {
       setLoading(false);
@@ -100,7 +118,6 @@ ${copy.proposalSummary}
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
-      {/* Header */}
       <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 print:hidden">
         <div>
           <div className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest mb-3">
@@ -108,7 +125,7 @@ ${copy.proposalSummary}
             <span className="opacity-30">/</span>
             <span className="text-slate-900">Proposal Builder</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-3 tracking-tight">Freelance Project Proposal & Quote Builder</h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-3 tracking-tight leading-tight">Project Proposal Builder</h1>
           <p className="text-lg text-slate-600 max-w-2xl leading-relaxed font-medium">
             AI-powered tiered quoting engine for independent professionals. Model your value, not your hours.
           </p>
@@ -121,7 +138,6 @@ ${copy.proposalSummary}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Sidebar Inputs */}
         <div className="lg:col-span-4 space-y-4 print:hidden">
           <Card className="p-8">
             <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 pb-4 border-b">Scope Definition</h3>
@@ -170,33 +186,35 @@ ${copy.proposalSummary}
               {loading ? (
                 <>
                   <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                  Calculating Proposal...
+                  Consulting Engine...
                 </>
               ) : "Architect Tiered Quote"}
             </Button>
 
             {error && (
-              <div className="mt-4 p-4 bg-red-50 border border-red-100 rounded-xl">
-                <p className="text-xs font-bold text-red-600 uppercase mb-1">Error</p>
-                <p className="text-sm text-red-700 leading-relaxed">{error}</p>
+              <div className="mt-4 p-5 bg-red-50 border border-red-200 rounded-2xl shadow-sm">
+                <div className="flex items-center gap-2 mb-2">
+                  <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                  <p className="text-xs font-black text-red-600 uppercase tracking-widest">Configuration Required</p>
+                </div>
+                <p className="text-sm text-red-700 leading-relaxed font-medium">{error}</p>
+                <button 
+                  /* @ts-ignore - openSelectKey is on window.aistudio */
+                  onClick={() => window.aistudio?.openSelectKey()} 
+                  className="mt-3 text-xs font-black text-blue-600 hover:text-blue-700 underline uppercase tracking-widest"
+                >
+                  Select API Key
+                </button>
               </div>
             )}
           </Card>
         </div>
 
-        {/* Results Area */}
         <div className="lg:col-span-8 space-y-5">
           <Disclaimer />
           
           {result ? (
             <div className="space-y-6 animate-in fade-in duration-500">
-              {/* Proposal Branding Header (Print Only) */}
-              <div className="hidden print:block border-b-4 border-blue-600 pb-6 mb-6">
-                <h1 className="text-3xl font-black text-slate-900">{result.quote.projectTitle}</h1>
-                <p className="text-slate-500 font-bold uppercase tracking-widest text-xs mt-2">Professional Proposal • Prepared by FreelanceCalc Engine</p>
-              </div>
-
-              {/* Summary View */}
               <div className="bg-slate-900 text-white rounded-[2rem] p-7 md:p-10 border-none shadow-xl relative overflow-hidden print:bg-transparent print:text-slate-900 print:shadow-none print:p-0">
                 <div className="relative z-10">
                   <span className="text-xs uppercase tracking-widest font-black opacity-60 block mb-3 print:text-blue-600">Executive Summary</span>
@@ -206,7 +224,6 @@ ${copy.proposalSummary}
                 </div>
               </div>
 
-              {/* Tiers Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 {result.quote.packages.map((pkg, i) => (
                   <Card 
@@ -260,7 +277,6 @@ ${copy.proposalSummary}
                 ))}
               </div>
 
-              {/* Milestones & Terms - Font Size Increased */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <Card className="p-8">
                   <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-5 pb-3 border-b">Payment Schedule</h3>
@@ -298,7 +314,6 @@ ${copy.proposalSummary}
                 </Card>
               </div>
 
-              {/* Email Template */}
               <Card className="p-8 print:hidden">
                 <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100">
                   <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Proposal Email Template ({selectedTier})</h3>
@@ -308,7 +323,6 @@ ${copy.proposalSummary}
                   {dynamicEmail}
                 </div>
               </Card>
-
             </div>
           ) : (
             <div className="py-16 flex flex-col items-center justify-center text-center p-10 border-4 border-dashed border-slate-200 rounded-[2.5rem] bg-white/50 animate-in fade-in zoom-in-95 duration-500">
