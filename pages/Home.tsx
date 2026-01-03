@@ -15,7 +15,7 @@ const ToolIcons = [
 ];
 
 const Home = () => {
-  const content = PAGES['/'];
+  const content = PAGES['/'] || { h1: 'Freelance Pricing Suite', intro: [], faqs: [] };
 
   return (
     <div className="w-full bg-slate-50">
@@ -35,10 +35,10 @@ const Home = () => {
           Professional-grade pricing tools for independent contractors. Set rates, audit overhead, and hit your 2026 revenue goals with data.
         </p>
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <Link to="/hourly-rate-calculator/" className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-bold shadow-2xl shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 transition-all active:scale-95 text-lg">
+          <Link to="/hourly-rate-calculator" className="px-10 py-5 bg-blue-600 text-white rounded-2xl font-bold shadow-2xl shadow-blue-200 hover:bg-blue-700 hover:-translate-y-1 transition-all active:scale-95 text-lg">
             Audit My Rates
           </Link>
-          <Link to="/project-quote-calculator/" className="px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold shadow-2xl shadow-slate-200 hover:bg-slate-950 hover:-translate-y-1 transition-all active:scale-95 text-lg">
+          <Link to="/project-quote-calculator" className="px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold shadow-2xl shadow-slate-200 hover:bg-slate-950 hover:-translate-y-1 transition-all active:scale-95 text-lg">
             Architect AI Quote
           </Link>
         </div>
@@ -55,7 +55,7 @@ const Home = () => {
           {FREELANCE_ROLES.map(role => (
             <Link 
               key={role} 
-              to={`/hourly-rate-calculator/${role.toLowerCase().replace(/ /g, '-')}/`}
+              to={`/hourly-rate-calculator/${role.toLowerCase().replace(/ /g, '-')}`}
               className="px-4 py-2 bg-white border border-slate-200 rounded-lg text-[11px] font-bold text-slate-500 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 transition-all shadow-sm active:scale-95 uppercase tracking-wider"
             >
               {role}

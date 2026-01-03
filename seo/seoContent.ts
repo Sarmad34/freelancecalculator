@@ -12,7 +12,7 @@ export type PageSEO = {
   intro: string[];
   sections: Array<{ h2: string; body: string[]; bullets?: string[] }>;
   faqs: FAQ[];
-  related: RelatedLink[];
+  related: readonly RelatedLink[];
   schemaHints: string[];
   lastUpdated: string;
 };
@@ -39,38 +39,108 @@ export const PAGES: Record<string, PageSEO> = {
     faqs: [
       { q: "Why do I need a 2026-specific calculator?", a: "The 2026 economy reflects higher SaaS overheads and shifting self-employment tax brackets. Standard calculators use outdated 2020 logic that leads to profit leakage." },
       { q: "What is the 'Utilization Gap'?", a: "Standard calculators assume you bill 40 hours a week. In reality, most high-performing freelancers only bill 22-26 hours. Our model accounts for this 40% non-billable gap." },
-      { q: "Is my financial data secure?", a: "100%. We use local browser processing. Your inputs never touch a server unless you explicitly use our AI features for custom project quotes." },
-      { q: "How should I handle 2026 inflation?", a: "We recommend a 5-8% annual 'Efficiency Adjustment' to your rates to maintain purchasing power as your expertise grows and tools become more expensive." },
-      { q: "What is the 2026 Tax Reserve Model?", a: "For 2026, we suggest a 28-32% reserve for federal and state taxes, plus a mandatory 4% 'Equipment Lifecycle' fund." },
-      { q: "Can I use this for global currencies?", a: "Yes. We support USD, GBP, EUR, and PKR with localized formatting, though tax logic defaults to standard professional benchmarks." },
-      { q: "Why move from hourly to project pricing?", a: "Hourly pricing punishes you for being fast. Project-based pricing rewards your expertise. Our AI tool helps you make that transition safely." },
-      { q: "How often should I audit my rates?", a: "We recommend a quarterly audit. As your 'Overhead Auditor' results change, your hourly base must adjust to maintain your target net income." }
+      { q: "Is my financial data secure?", a: "100%. We use local browser processing. Your inputs never touch a server unless you explicitly use our AI features for custom project quotes." }
     ],
     related: [...TOOL_LINKS, ...GUIDE_LINKS.slice(0, 3)],
     schemaHints: ["WebSite", "FinancialService", "FAQPage"],
     lastUpdated: "2026-01-01"
   },
-  "/hourly-rate-calculator/": {
-    path: "/hourly-rate-calculator/",
-    title: "Freelance Hourly Rate Calculator | Professional 2026 Model",
-    description: "Calculate your ideal freelance hourly rate using the 2026 Utilization Model. Factor in taxes, business overhead, and desired profit margins.",
-    h1: "Hourly Rate Calculator: Find Your True Worth",
-    intro: [
-      "Our 2026 model uses the 'Working Backwards' method: starting with your desired net income and layering on the realities of being a business owner."
-    ],
+  "/hourly-rate-calculator": {
+    path: "/hourly-rate-calculator",
+    title: "Freelance Hourly Rate Calculator | 2026 Utilization Model",
+    description: "Calculate the hourly rate you actually need to survive and thrive as a freelancer in 2026. Factors in taxes, expenses, and non-billable time.",
+    h1: "Hourly Rate Auditor",
+    intro: ["Your hourly rate is the foundation of your business. In 2026, setting a rate isn't just about 'what the market pays'—it's about covering your operational burn and retirement goals."],
     sections: [
-      {
-        h2: "Understanding Billable Utilization",
-        body: [
-          "Even if you 'work' 40 hours a week, you aren't 'billing' 40 hours. You have client meetings, prospecting, learning, and billing admin. A sustainable utilization rate is usually between 55% and 65%."
-        ]
-      }
+      { h2: "The Formula for Success", body: ["We use a reverse-engineered salary model. We start with your desired take-home pay, add business overhead, and divide by realistic billable hours."] }
     ],
-    faqs: [
-      { q: "What is a good starting profit margin?", a: "For specialized freelancers, 15-20% is ideal. For those in high-competition roles, 10% is a safe baseline." }
-    ],
-    related: [{ href: "/overhead-expense-calculator/", label: "Overhead Auditor" }, { href: "/guides/how-to-set-freelance-rates/", label: "Expert Pricing Guide" }],
-    schemaHints: ["SoftwareApplication", "FAQPage"],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["FinancialService"],
+    lastUpdated: "2026-01-01"
+  },
+  "/project-quote-calculator": {
+    path: "/project-quote-calculator",
+    title: "AI Project Quote Builder | Tiered Pricing Architect",
+    description: "Generate professional, tiered project quotes with AI. Move from hourly billing to value-based pricing for better freelance margins.",
+    h1: "Project Quote Builder",
+    intro: ["Stop guessing project costs. Use our AI-driven engine to architect tiered proposals that offer clients choice and maximize your project value."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["SoftwareApplication"],
+    lastUpdated: "2026-01-01"
+  },
+  "/overhead-expense-calculator": {
+    path: "/overhead-expense-calculator",
+    title: "Freelance Overhead Auditor | Burn Rate Calculator",
+    description: "Audit your business expenses and identify SaaS sprawl. Calculate your business cost per billable hour.",
+    h1: "Overhead Auditor",
+    intro: ["Hidden expenses are the silent killer of freelance profit. Our auditor identifies exactly how much your toolset costs you per hour worked."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["FinancialService"],
+    lastUpdated: "2026-01-01"
+  },
+  "/platform-fee-calculator": {
+    path: "/platform-fee-calculator",
+    title: "Platform Fee Calculator | Upwork & Fiverr Margin Control",
+    description: "Calculate net pay after platform commissions. Reverse-calculate your quote to ensure you take home your desired rate.",
+    h1: "Platform Fee Auditor",
+    intro: ["Platform commissions can eat 10-20% of your revenue instantly. This tool helps you quote higher to protect your bottom line."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["FinancialService"],
+    lastUpdated: "2026-01-01"
+  },
+  "/tax-take-home-estimator": {
+    path: "/tax-take-home-estimator",
+    title: "Freelance Tax & Take-Home Estimator",
+    description: "Estimate your real take-home pay after tax reserves and wealth savings. Plan your 2026 financial freedom.",
+    h1: "Net Worth Architect",
+    intro: ["Revenue is a vanity metric; take-home pay is sanity. Architect your savings and tax reserves with precision."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["FinancialService"],
+    lastUpdated: "2026-01-01"
+  },
+  "/guides/fixed-price-vs-hourly": {
+    path: "/guides/fixed-price-vs-hourly",
+    title: "Fixed Price vs Hourly Billing | 2026 Strategic Guide",
+    description: "Compare fixed-price quotes with hourly billing. Learn why value-based pricing is the key to scaling your freelance profit in 2026.",
+    h1: "Fixed Price vs Hourly: Choosing Your Profit Model",
+    intro: ["Stop trading your life for an hourly rate. Learn how to architect fixed quotes that protect your time and reward your expertise."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["Article"],
+    lastUpdated: "2026-01-01"
+  },
+  "/guides/pricing-packages": {
+    path: "/guides/pricing-packages",
+    title: "How to Build Tiered Pricing Packages for Freelancers",
+    description: "Master the art of tiered pricing. Learn the 'Rule of Three' and how to build high-conversion project packages in 2026.",
+    h1: "High-Conversion Pricing Packages",
+    intro: ["Transform your service into a product. Use psychology-backed tiered pricing to close bigger deals with less resistance."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["Article"],
+    lastUpdated: "2026-01-01"
+  },
+  "/guides/retainers-for-freelancers": {
+    path: "/guides/retainers-for-freelancers",
+    title: "Freelance Retainer Guide: Building Recurring Revenue",
+    description: "Learn how to pitch and structure monthly retainers. Kill the freelance rollercoaster with predictable recurring revenue in 2026.",
+    h1: "Retainers: The Path to Stable Revenue",
+    intro: ["The ultimate guide to recurring revenue. Learn how to sell availability and priority to your best clients."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["Article"],
     lastUpdated: "2026-01-01"
   }
 };

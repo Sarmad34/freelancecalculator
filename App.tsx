@@ -19,6 +19,9 @@ import DisclaimerPage from './pages/Disclaimer';
 import EditorialPolicy from './pages/EditorialPolicy';
 import GuideRates from './pages/GuideRates';
 import GuideUtilization from './pages/GuideUtilization';
+import GuideFixedVsHourly from './pages/GuideFixedVsHourly';
+import GuidePackages from './pages/GuidePackages';
+import GuideRetainers from './pages/GuideRetainers';
 import { SEO } from './components/SEO';
 import { TRUST_LINKS, TOOL_LINKS, GUIDE_LINKS } from './seo/internalLinks';
 import { Logo } from './components/Logo';
@@ -136,6 +139,9 @@ const App = () => {
             <Route path="/editorial-policy" element={<EditorialPolicy />} />
             <Route path="/guides/how-to-set-freelance-rates" element={<GuideRates />} />
             <Route path="/guides/billable-hours-utilization" element={<GuideUtilization />} />
+            <Route path="/guides/fixed-price-vs-hourly" element={<GuideFixedVsHourly />} />
+            <Route path="/guides/pricing-packages" element={<GuidePackages />} />
+            <Route path="/guides/retainers-for-freelancers" element={<GuideRetainers />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

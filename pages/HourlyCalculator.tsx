@@ -14,7 +14,7 @@ const HourlyCalculator: React.FC<{ currency: Currency }> = ({ currency }) => {
   const roleName = roleSlug ? roleSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'General Freelancer';
   const rolePreset = ROLE_DATA[roleName] || ROLE_DATA.default;
 
-  const content = PAGES['/hourly-rate-calculator/'];
+  const content = PAGES['/hourly-rate-calculator'];
 
   const [state, setState] = useState<HourlyRateState>({
     targetIncome: parseFloat(searchParams.get('income') || '') || rolePreset.income,
@@ -112,10 +112,10 @@ const HourlyCalculator: React.FC<{ currency: Currency }> = ({ currency }) => {
 
           <div className="prose prose-slate max-w-none bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm">
             <h2 className="mt-0 text-3xl font-black text-slate-900">Pricing Strategy for {roleName}s</h2>
-            {content.intro.map((p, i) => <p key={i} className="text-lg text-slate-600 font-medium leading-relaxed">{p}</p>)}
+            {content?.intro.map((p, i) => <p key={i} className="text-lg text-slate-600 font-medium leading-relaxed">{p}</p>)}
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-              {content.sections.map((s, idx) => (
+              {content?.sections.map((s, idx) => (
                 <div key={idx} className="p-8 bg-slate-50 rounded-3xl border border-slate-100">
                   <h3 className="text-lg font-black text-slate-900 mb-4 mt-0">{s.h2}</h3>
                   {s.body.map((p, i) => <p key={i} className="text-sm text-slate-500 leading-relaxed mb-0">{p}</p>)}

@@ -6,7 +6,7 @@ import { formatCurrency } from '../services/calculations';
 import { PAGES } from '../seo/seoContent';
 
 const OverheadCalculator: React.FC<{ currency: Currency }> = ({ currency }) => {
-  const content = PAGES['/overhead-expense-calculator/'];
+  const content = PAGES['/overhead-expense-calculator'];
   const [state, setState] = useState<OverheadState>({
     softwareSaaS: 1450,
     hardwareGear: 2200,
@@ -143,10 +143,10 @@ BREAKDOWN:
           </Card>
 
           <div className="prose prose-slate max-w-none bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm mt-12 print:hidden">
-            <h2 className="mt-0 text-3xl font-black text-slate-900">{content.h1}</h2>
-            {content.intro.map((p, i) => <p key={i} className="text-lg text-slate-600 font-medium">{p}</p>)}
+            <h2 className="mt-0 text-3xl font-black text-slate-900">{content?.h1}</h2>
+            {content?.intro.map((p, i) => <p key={i} className="text-lg text-slate-600 font-medium leading-relaxed">{p}</p>)}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-              {content.sections.map((s, idx) => (
+              {content?.sections.map((s, idx) => (
                 <div key={idx} className="p-8 bg-slate-50 rounded-3xl border border-slate-100">
                   <h3 className="text-lg font-black text-slate-900 mb-4 mt-0">{s.h2}</h3>
                   {s.body.map((p, i) => <p key={i} className="text-sm text-slate-500 leading-relaxed mb-0">{p}</p>)}

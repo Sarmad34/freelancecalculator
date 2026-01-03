@@ -6,7 +6,7 @@ import { formatCurrency } from '../services/calculations';
 import { PAGES } from '../seo/seoContent';
 
 const TaxEstimator: React.FC<{ currency: Currency }> = ({ currency }) => {
-  const content = PAGES['/tax-take-home-estimator/'];
+  const content = PAGES['/tax-take-home-estimator'];
   const [profit, setProfit] = useState(120000);
   const [taxRate, setTaxRate] = useState(28);
   const [extra, setExtra] = useState(15);
@@ -34,22 +34,21 @@ WEEKLY ALLOWANCE: ${formatCurrency(takeHome / 52, currency)}
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 print:hidden">
         <div>
-          <div className="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4">
+          <div className="flex items-center gap-2 text-xs font-black text-slate-400 uppercase tracking-widest mb-4">
             <span className="text-blue-600">Wealth Architecture</span>
             <span className="opacity-30">/</span>
             <span className="text-slate-900">Tax & Net Worth Auditor</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight">Net Worth Architect</h1>
+          <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4 tracking-tight leading-tight">Net Worth Architect</h1>
           <p className="text-lg text-slate-600 max-w-2xl leading-relaxed font-medium">Stop the "Post-Tax Panic." Calculate exactly how much you can spend vs how much you must save in 2026.</p>
         </div>
         <div className="flex gap-3">
-          <CopyButton text={taxReport} />
-          <Button variant="outline" onClick={() => window.print()} className="!px-4 !py-2 !text-xs">Save PDF</Button>
+          <CopyButton text={taxReport} label="Copy Wealth Plan" />
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
-        <div className="lg:col-span-4 space-y-4 print:col-span-12">
+        <div className="lg:col-span-4 space-y-4">
           <Card className="p-8">
             <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-8 pb-4 border-b">1. Annual Economics</h3>
             <Input label="Business Profit (Pre-Tax)" value={profit} onChange={setProfit} suffix={currency} help="Revenue minus business overhead." />
@@ -57,20 +56,20 @@ WEEKLY ALLOWANCE: ${formatCurrency(takeHome / 52, currency)}
             <Input label="Long-term Savings / ROI" value={extra} onChange={setExtra} suffix="%" help="Aim for 15% to outpace 2026 inflation." />
           </Card>
 
-          <Card className="p-8 bg-slate-50 border-slate-200 print:hidden">
-            <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">2026 Allocation Model</h4>
+          <Card className="p-8 bg-slate-50 border-slate-200">
+            <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-6">2026 Allocation Model</h4>
             <div className="space-y-6">
               <div>
-                <div className="flex justify-between text-[10px] font-black uppercase mb-2">
+                <div className="flex justify-between text-xs font-black uppercase mb-2">
                   <span>Spendable Pay</span>
-                  <span className="text-blue-600">{100 - taxRate - extra}%</span>
+                  <span className="text-blue-600">{Math.max(0, 100 - taxRate - extra)}%</span>
                 </div>
                 <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-600" style={{ width: `${100 - taxRate - extra}%` }}></div>
+                  <div className="h-full bg-blue-600" style={{ width: `${Math.max(0, 100 - taxRate - extra)}%` }}></div>
                 </div>
               </div>
               <div>
-                <div className="flex justify-between text-[10px] font-black uppercase mb-2">
+                <div className="flex justify-between text-xs font-black uppercase mb-2">
                   <span>Tax Reserve</span>
                   <span className="text-red-500">{taxRate}%</span>
                 </div>
@@ -79,7 +78,7 @@ WEEKLY ALLOWANCE: ${formatCurrency(takeHome / 52, currency)}
                 </div>
               </div>
               <div>
-                <div className="flex justify-between text-[10px] font-black uppercase mb-2">
+                <div className="flex justify-between text-xs font-black uppercase mb-2">
                   <span>Wealth Savings</span>
                   <span className="text-green-500">{extra}%</span>
                 </div>
@@ -91,14 +90,14 @@ WEEKLY ALLOWANCE: ${formatCurrency(takeHome / 52, currency)}
           </Card>
         </div>
 
-        <div className="lg:col-span-8 space-y-6 print:col-span-12">
+        <div className="lg:col-span-8 space-y-6">
           <Disclaimer />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-slate-900 text-white rounded-[2.5rem] p-10 shadow-2xl relative overflow-hidden group col-span-1 md:col-span-2">
+            <div className="bg-slate-900 text-white rounded-[2rem] p-10 shadow-2xl relative overflow-hidden group col-span-1 md:col-span-2">
               <div className="relative z-10">
-                <span className="text-[10px] uppercase tracking-widest font-black opacity-70 block mb-4">Real Net Salary (Annual)</span>
-                <div className="text-7xl font-black mb-2 tracking-tighter">{formatCurrency(takeHome, currency)}</div>
+                <span className="text-xs uppercase tracking-widest font-black opacity-70 block mb-4">Real Net Salary (Annual)</span>
+                <div className="text-6xl font-black mb-2 tracking-tighter leading-none">{formatCurrency(takeHome, currency)}</div>
                 <div className="flex flex-wrap gap-4 mt-8">
                   <div className="px-6 py-4 bg-white/10 rounded-2xl border border-white/5 backdrop-blur-sm">
                     <span className="block text-[8px] uppercase font-black opacity-50 mb-1">Monthly</span>
@@ -112,24 +111,16 @@ WEEKLY ALLOWANCE: ${formatCurrency(takeHome / 52, currency)}
               </div>
             </div>
 
-            <div className="bg-red-600 text-white rounded-[2.5rem] p-10 border-none shadow-xl relative overflow-hidden">
-              <span className="text-[10px] uppercase tracking-widest font-black opacity-70 block mb-4">Tax Provision</span>
-              <div className="text-4xl font-black mb-2 tracking-tighter">{formatCurrency(taxAmount, currency)}</div>
-              <p className="text-[10px] uppercase font-bold opacity-60">Reserved for Govt.</p>
+            <div className="bg-red-600 text-white rounded-[2.5rem] p-10 border-none shadow-xl relative overflow-hidden flex flex-col justify-center">
+              <span className="text-xs uppercase tracking-widest font-black opacity-70 block mb-4">Tax Provision</span>
+              <div className="text-3xl font-black mb-2 tracking-tighter">{formatCurrency(taxAmount, currency)}</div>
+              <p className="text-xs uppercase font-bold opacity-60">Reserved for Govt.</p>
             </div>
           </div>
 
           <div className="prose prose-slate max-w-none bg-white p-12 rounded-[2.5rem] border border-slate-100 shadow-sm print:hidden">
-            <h2 className="mt-0 text-3xl font-black text-slate-900">{content.h1}</h2>
-            {content.intro.map((p, i) => <p key={i} className="text-lg text-slate-600 font-medium leading-relaxed">{p}</p>)}
-            
-            <div className="mt-12 p-10 bg-blue-50 rounded-[2rem] border border-blue-100 flex flex-col md:flex-row gap-8 items-center">
-              <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm text-2xl font-black text-blue-600">i</div>
-              <div>
-                <h4 className="text-blue-900 font-black mb-2">The 2026 Self-Employment Reality</h4>
-                <p className="text-sm text-blue-800 leading-relaxed mb-0 font-medium">In 2026, self-employment tax structures have shifted toward higher quarterly compliance. We recommend maintaining a separate "High-Yield Tax Vault" account to earn 4%+ interest on your tax reserves before they are due.</p>
-              </div>
-            </div>
+            <h2 className="mt-0 text-3xl font-black text-slate-900">{content?.h1}</h2>
+            {content?.intro.map((p, i) => <p key={i} className="text-lg text-slate-600 font-medium leading-relaxed">{p}</p>)}
           </div>
         </div>
       </div>
