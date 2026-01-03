@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { CURRENCIES } from './constants';
@@ -6,6 +7,7 @@ import Home from './pages/Home';
 import HourlyCalculator from './pages/HourlyCalculator';
 import ProjectQuoteCalculator from './pages/ProjectQuoteCalculator';
 import RetainerCalculator from './pages/RetainerCalculator';
+import OverheadCalculator from './pages/OverheadCalculator';
 import PlatformFeeCalculator from './pages/PlatformFeeCalculator';
 import TaxEstimator from './pages/TaxEstimator';
 import About from './pages/About';
@@ -59,14 +61,14 @@ const Footer = () => (
           <Logo className="w-8 h-8" />
           <h3 className="text-white font-black text-xl tracking-tight">FreelanceCalc</h3>
         </div>
-        <p className="text-sm leading-relaxed mb-6">High-trust financial engineering for the modern independent professional.</p>
+        <p className="text-sm leading-relaxed mb-6">Professional-grade financial modeling and pricing psychology for independent contractors, consultants, and creative professionals.</p>
         <div className="flex gap-4">
           <a href="#" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition-colors font-bold text-white text-xs">X</a>
           <a href="#" className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition-colors font-bold text-white text-xs">LN</a>
         </div>
       </div>
       <div>
-        <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Calculators</h4>
+        <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Pricing Suite</h4>
         <ul className="space-y-3 text-sm">
           {TOOL_LINKS.map(link => (
             <li key={link.href}><Link to={link.href} className="hover:text-white transition-colors">{link.label}</Link></li>
@@ -74,7 +76,7 @@ const Footer = () => (
         </ul>
       </div>
       <div>
-        <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Guides</h4>
+        <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Expert Guides</h4>
         <ul className="space-y-3 text-sm">
           {GUIDE_LINKS.slice(0, 5).map(link => (
             <li key={link.href}><Link to={link.href} className="hover:text-white transition-colors">{link.label}</Link></li>
@@ -82,7 +84,7 @@ const Footer = () => (
         </ul>
       </div>
       <div>
-        <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Legal & Trust</h4>
+        <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Corporate</h4>
         <ul className="space-y-3 text-sm">
           {TRUST_LINKS.map(link => (
             <li key={link.href}><Link to={link.href} className="hover:text-white transition-colors">{link.label}</Link></li>
@@ -91,10 +93,10 @@ const Footer = () => (
       </div>
     </div>
     <div className="max-w-7xl mx-auto px-4 mt-20 pt-8 border-t border-slate-800 text-[11px] font-medium uppercase tracking-widest flex flex-col md:flex-row justify-between items-center gap-4 text-slate-500">
-      <p>&copy; {new Date().getFullYear()} Freelance Calculator. All rights reserved.</p>
+      <p>&copy; {new Date().getFullYear()} Freelance Calculator. Built for the Independent Economy.</p>
       <div className="flex gap-6">
-        <span>Verified Business Logic</span>
-        <span>AdSense Certified Partner</span>
+        <span className="text-slate-400">Secure AES-256 Encryption</span>
+        <span className="text-slate-400">Zero Data Retention Policy</span>
       </div>
     </div>
   </footer>
@@ -118,16 +120,13 @@ const App = () => {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Home />} />
-            
-            {/* Calculator Routes */}
             <Route path="/hourly-rate-calculator" element={<HourlyCalculator currency={currency} />} />
             <Route path="/hourly-rate-calculator/:role" element={<HourlyCalculator currency={currency} />} />
             <Route path="/project-quote-calculator" element={<ProjectQuoteCalculator currency={currency} />} />
             <Route path="/retainer-calculator" element={<RetainerCalculator currency={currency} />} />
+            <Route path="/overhead-expense-calculator" element={<OverheadCalculator currency={currency} />} />
             <Route path="/platform-fee-calculator" element={<PlatformFeeCalculator currency={currency} />} />
             <Route path="/tax-take-home-estimator" element={<TaxEstimator currency={currency} />} />
-            
-            {/* Legal Pages */}
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacy" element={<Privacy />} />
@@ -135,12 +134,8 @@ const App = () => {
             <Route path="/cookie-policy" element={<CookiePolicy />} />
             <Route path="/disclaimer" element={<DisclaimerPage />} />
             <Route path="/editorial-policy" element={<EditorialPolicy />} />
-
-            {/* Guides */}
             <Route path="/guides/how-to-set-freelance-rates" element={<GuideRates />} />
             <Route path="/guides/billable-hours-utilization" element={<GuideUtilization />} />
-            
-            {/* Catch-all Redirect */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>

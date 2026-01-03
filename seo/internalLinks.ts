@@ -1,7 +1,9 @@
+
 export const TOOL_LINKS = [
   { href: "/hourly-rate-calculator", label: "Hourly Rate Calculator" },
   { href: "/project-quote-calculator", label: "Project Quote Calculator" },
   { href: "/retainer-calculator", label: "Retainer Calculator" },
+  { href: "/overhead-expense-calculator", label: "Overhead Auditor" },
   { href: "/platform-fee-calculator", label: "Platform Fee Calculator" },
   { href: "/tax-take-home-estimator", label: "Tax & Take-Home Estimator" },
 ] as const;

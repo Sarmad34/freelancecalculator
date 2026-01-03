@@ -44,3 +44,12 @@ export interface HourlyRateState {
   taxReserve: number;
   platformFee: number;
 }
+
+export interface OverheadState {
+  softwareSaaS: number;
+  hardwareGear: number;
+  marketingAds: number;
+  insuranceLegal: number;
+  educationTraining: number;
+  officeUtilities: number;
+}

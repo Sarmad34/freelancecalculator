@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
 import { ProjectQuoteResult, Currency, CopyBlocks } from "../types";
 
@@ -9,14 +10,12 @@ export const generateProjectQuote = async (params: {
   complexity: string;
   currency: Currency;
 }): Promise<{ quote: ProjectQuoteResult; copy: CopyBlocks }> => {
-  const apiKey = process.env.API_KEY;
-  
-  if (!apiKey) {
+  if (!process.env.API_KEY) {
     throw new Error("AI services are currently unavailable (Missing API Key). Please ensure the environment is correctly configured.");
   }
 
-  // Always use the process.env.API_KEY directly in the client constructor.
-  const ai = new GoogleGenAI({ apiKey });
+  // Always use the process.env.API_KEY directly in the client constructor as per guidelines.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const model = "gemini-3-flash-preview";
 
   const prompt = `Generate a freelance project quote for a ${params.role} doing a ${params.projectType} project.
