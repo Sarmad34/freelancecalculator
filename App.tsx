@@ -22,6 +22,7 @@ import GuideUtilization from './pages/GuideUtilization';
 import GuideFixedVsHourly from './pages/GuideFixedVsHourly';
 import GuidePackages from './pages/GuidePackages';
 import GuideRetainers from './pages/GuideRetainers';
+import Sitemap from './pages/Sitemap';
 import { SEO } from './components/SEO';
 import { TRUST_LINKS, TOOL_LINKS, GUIDE_LINKS } from './seo/internalLinks';
 import { Logo } from './components/Logo';
@@ -92,7 +93,7 @@ const Footer = () => (
           {TRUST_LINKS.map(link => (
             <li key={link.href}><Link to={link.href} className="hover:text-white transition-colors">{link.label}</Link></li>
           ))}
-          <li><a href="/sitemap.xml" target="_blank" className="hover:text-white transition-colors">Sitemap</a></li>
+          <li><Link to="/sitemap" className="hover:text-white transition-colors">Visual Sitemap</Link></li>
         </ul>
       </div>
     </div>
@@ -143,6 +144,7 @@ const App = () => {
             <Route path="/guides/fixed-price-vs-hourly" element={<GuideFixedVsHourly />} />
             <Route path="/guides/pricing-packages" element={<GuidePackages />} />
             <Route path="/guides/retainers-for-freelancers" element={<GuideRetainers />} />
+            <Route path="/sitemap" element={<Sitemap />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
