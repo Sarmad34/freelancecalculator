@@ -16,23 +16,26 @@ const GuidePackages = () => (
     <p className="text-slate-700 leading-relaxed">Follow the "Good, Better, Best" framework used by Apple, Starbucks, and major SaaS companies:</p>
     
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10 not-prose">
-      <div className="p-8 bg-white border border-slate-200 rounded-3xl shadow-sm hover:shadow-md transition-shadow group">
-        <h4 className="font-black text-slate-900 mb-3 text-sm uppercase tracking-widest">Tier 1: The Anchor</h4>
-        <p className="text-sm text-slate-600 leading-relaxed font-medium m-0 group-hover:text-slate-900 transition-colors">
+      {/* Tier 1: Light Card */}
+      <div className="p-8 bg-white border border-slate-200 rounded-[2rem] shadow-sm hover:shadow-md transition-shadow group flex flex-col">
+        <h4 className="font-black text-slate-900 mb-3 text-xs uppercase tracking-[0.2em]">Tier 1: The Anchor</h4>
+        <p className="text-sm text-slate-600 leading-relaxed font-bold m-0 flex-grow">
           The MVP. Just enough to get the job done. High enough to be profitable, but clearly missing the 'best' features.
         </p>
       </div>
       
-      <div className="p-8 bg-blue-600 rounded-3xl shadow-xl shadow-blue-200 ring-4 ring-blue-50">
-        <h4 className="font-black mb-3 text-white text-sm uppercase tracking-wider">Tier 2: The Target</h4>
-        <p className="text-sm text-white leading-relaxed font-bold m-0 opacity-100">
+      {/* Tier 2: High Contrast Blue */}
+      <div className="p-8 bg-blue-600 rounded-[2rem] shadow-xl shadow-blue-400/20 ring-8 ring-blue-50 flex flex-col scale-105 z-10">
+        <h4 className="font-black mb-3 text-white text-xs uppercase tracking-[0.2em] opacity-90">Tier 2: The Target</h4>
+        <p className="text-sm text-white leading-relaxed font-bold m-0 flex-grow">
           The Goldilocks zone. 70% of clients should choose this. It includes your most valuable standard features.
         </p>
       </div>
       
-      <div className="p-8 bg-slate-900 rounded-3xl shadow-xl">
-        <h4 className="font-black mb-3 text-white text-sm uppercase tracking-wider">Tier 3: The VIP</h4>
-        <p className="text-sm text-slate-100 leading-relaxed font-bold m-0 opacity-90">
+      {/* Tier 3: High Contrast Dark */}
+      <div className="p-8 bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-900/10 flex flex-col">
+        <h4 className="font-black mb-3 text-white text-xs uppercase tracking-[0.2em] opacity-80">Tier 3: The VIP</h4>
+        <p className="text-sm text-white leading-relaxed font-bold m-0 opacity-90 flex-grow">
           The high-touch, premium option. Strategy calls, speed guarantees, and bonus features. Even if nobody buys it, it makes Tier 2 look like a bargain.
         </p>
       </div>
@@ -53,10 +56,10 @@ const GuidePackages = () => (
     </div>
 
     <div className="flex flex-col items-center mt-16 pt-8 border-t border-slate-100">
-      <Link to="/project-quote-calculator" className="inline-block px-10 py-5 bg-blue-600 text-white rounded-2xl no-underline font-bold text-lg hover:bg-blue-700 shadow-2xl shadow-blue-200 transition-all active:scale-95">
-        Test Your Package Tiers with AI
+      <Link to="/project-quote-calculator" className="inline-block px-10 py-5 bg-blue-600 text-white rounded-2xl no-underline font-black uppercase tracking-[0.2em] text-xs hover:bg-blue-700 shadow-2xl shadow-blue-200 transition-all active:scale-95">
+        Architect Package Tiers with AI
       </Link>
-      <p className="text-[10px] text-slate-400 mt-4 font-black uppercase tracking-[0.3em] italic">Powered by Gemini 3 Flash Architecture</p>
+      <p className="text-[10px] text-slate-400 mt-6 font-black uppercase tracking-[0.3em] italic">Proprietary Pricing Logic • 2026 Benchmarks</p>
     </div>
   </article>
 );
