@@ -119,6 +119,31 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
     );
   }, [result, selectedTier, currency]);
 
+  const fullQuoteText = useMemo(() => {
+    if (!result) return "";
+    const { quote, copy } = result;
+    return `
+PROJECT QUOTE: ${quote.projectTitle}
+ROLE: ${quote.role}
+CURRENCY: ${quote.currency}
+
+PACKAGES:
+${quote.packages.map(p => `
+[${p.name}] - ${formatCurrency(p.price, currency)}
+Best For: ${p.bestFor}
+Timeline: ${p.timelineWeeks} Weeks
+Revisions: ${p.revisionsIncluded}
+Includes: ${p.included.join(', ')}
+`).join('\n')}
+
+MILESTONES:
+${quote.milestones.map(m => `- ${m.name}: ${m.percent}% (${formatCurrency(m.amount, currency)})`).join('\n')}
+
+PROPOSAL SUMMARY:
+${copy.proposalSummary}
+    `.trim();
+  }, [result, currency]);
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
       <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6 print:hidden">
@@ -136,11 +161,12 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
         <div className="flex gap-3">
           <button 
             onClick={handleOpenKeySelector}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm border ${hasKey ? 'bg-green-50 text-green-700 border-green-100' : 'bg-blue-600 text-white border-blue-500 hover:bg-blue-700'}`}
+            className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg border-2 ${hasKey ? 'bg-green-50 text-green-700 border-green-200' : 'bg-blue-600 text-white border-blue-500 hover:bg-blue-700 hover:scale-105 active:scale-95 animate-pulse'}`}
           >
-            <span className={`w-2 h-2 rounded-full ${hasKey ? 'bg-green-500' : 'bg-white animate-pulse'}`}></span>
+            <span className={`w-2.5 h-2.5 rounded-full ${hasKey ? 'bg-green-500' : 'bg-white'}`}></span>
             {hasKey ? 'AI Connected' : 'Connect AI Engine'}
           </button>
+          {result && <CopyButton text={fullQuoteText} label="Copy Full Quote" />}
         </div>
       </div>
 
@@ -149,6 +175,28 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
           <Card className="p-8">
             <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 pb-4 border-b">Scope Definition</h3>
             
+            <div className="mb-6">
+              <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-2">Professional Role</label>
+              <select 
+                value={form.role} 
+                onChange={e => setForm({...form, role: e.target.value})}
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                {FREELANCE_ROLES.map(r => <option key={r} value={r}>{r}</option>)}
+              </select>
+            </div>
+
+            <div className="mb-6">
+              <label className="block text-xs font-black uppercase tracking-widest text-slate-500 mb-2">Project Category</label>
+              <select 
+                value={form.projectType} 
+                onChange={e => setForm({...form, projectType: e.target.value})}
+                className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                {PROJECT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
+            </div>
+
             <Input label="Base Effort (Hours)" value={form.hours} onChange={v => setForm({...form, hours: v})} help="Estimated labor hours." />
             <Input label="Target Rate" value={form.rate} onChange={v => setForm({...form, rate: v})} suffix={currency} help="Used as price floor." />
             
@@ -177,26 +225,28 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
             </Button>
 
             {error && (
-              <div className="mt-6 p-5 bg-red-50 border border-red-200 rounded-2xl shadow-sm">
-                <div className="flex items-center gap-2 mb-2">
-                  <svg className="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                  <p className="text-[10px] font-black text-red-600 uppercase tracking-widest leading-none">Configuration Required</p>
+              <div className="mt-6 p-6 bg-red-50 border-2 border-red-200 rounded-[2rem] shadow-sm">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-red-100 rounded-lg">
+                    <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                  </div>
+                  <p className="text-xs font-black text-red-600 uppercase tracking-widest">Action Required</p>
                 </div>
-                <p className="text-xs text-red-700 leading-relaxed font-bold mb-4">{error}</p>
-                <div className="flex flex-col gap-2">
+                <p className="text-sm text-red-700 leading-relaxed font-bold mb-5">{error}</p>
+                <div className="flex flex-col gap-3">
                   <button 
                     onClick={handleOpenKeySelector} 
-                    className="w-full py-3 bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all"
+                    className="w-full py-4 bg-blue-600 text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95"
                   >
-                    Select API Key
+                    Select Cloud API Key
                   </button>
                   <a 
                     href="https://ai.google.dev/gemini-api/docs/billing" 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="text-[9px] text-center text-slate-400 hover:text-slate-600 underline font-black uppercase tracking-widest"
+                    className="text-[10px] text-center text-slate-400 hover:text-slate-600 underline font-black uppercase tracking-widest"
                   >
-                    Billing Setup Guide
+                    Check Billing Requirements
                   </a>
                 </div>
               </div>
@@ -269,8 +319,53 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
                   </Card>
                 ))}
               </div>
-              
-              {/* Other existing UI parts like milestones, email template, etc remain the same */}
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <Card className="p-8">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-5 pb-3 border-b">Payment Schedule</h3>
+                  <div className="space-y-4">
+                    {result.quote.milestones.map((m, i) => (
+                      <div key={i} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100">
+                        <div>
+                          <p className="text-sm font-black text-slate-900 mb-1 uppercase tracking-wider">{m.name}</p>
+                          <p className="text-xs text-slate-400 font-bold">{m.due}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-base font-black text-blue-600">{m.percent}%</p>
+                          <p className="text-xs font-bold text-slate-400">{formatCurrency(m.amount, currency)}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+
+                <Card className="p-8 bg-slate-50 border-slate-200">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-5 pb-3 border-b">Agreement Terms</h3>
+                  <ul className="space-y-4">
+                    {result.quote.assumptions.map((a, i) => (
+                      <li key={i} className="text-sm text-slate-600 font-medium flex gap-3 leading-relaxed">
+                        <span className="text-blue-600 font-black flex-shrink-0">→</span> {a}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-6 pt-6 border-t border-slate-200">
+                    <h4 className="text-xs font-black uppercase text-slate-400 mb-2">Change Management</h4>
+                    <p className="text-sm text-slate-600 font-medium italic leading-relaxed">
+                      {result.quote.changeRequestPolicy}
+                    </p>
+                  </div>
+                </Card>
+              </div>
+
+              <Card className="p-8 print:hidden">
+                <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100">
+                  <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Proposal Email Template ({selectedTier})</h3>
+                  <CopyButton text={dynamicEmail} label="Copy Delivery Email" />
+                </div>
+                <div className="p-6 bg-slate-900 text-blue-400 rounded-xl text-sm font-mono whitespace-pre-wrap leading-relaxed border border-slate-800 shadow-inner overflow-x-auto">
+                  {dynamicEmail}
+                </div>
+              </Card>
             </div>
           ) : (
             <div className="py-20 flex flex-col items-center justify-center text-center p-10 border-4 border-dashed border-slate-200 rounded-[2.5rem] bg-white/50 animate-in fade-in duration-700">
@@ -284,7 +379,7 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
               {!hasKey && (
                 <button 
                   onClick={handleOpenKeySelector}
-                  className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95"
+                  className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95 animate-bounce"
                 >
                   Step 1: Connect AI Engine
                 </button>

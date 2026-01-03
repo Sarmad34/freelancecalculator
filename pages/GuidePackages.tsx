@@ -17,25 +17,25 @@ const GuidePackages = () => (
     
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-10 not-prose">
       {/* Tier 1: Light Card */}
-      <div className="p-8 bg-white border border-slate-200 rounded-[2rem] shadow-sm hover:shadow-md transition-shadow group flex flex-col">
-        <h4 className="font-black text-slate-900 mb-3 text-xs uppercase tracking-[0.2em]">Tier 1: The Anchor</h4>
+      <div className="p-8 bg-white border border-slate-200 rounded-[2rem] shadow-sm hover:shadow-md transition-shadow group flex flex-col min-h-[300px]">
+        <h4 className="font-black text-slate-900 mb-4 text-xs uppercase tracking-[0.2em]">Tier 1: The Anchor</h4>
         <p className="text-sm text-slate-600 leading-relaxed font-bold m-0 flex-grow">
           The MVP. Just enough to get the job done. High enough to be profitable, but clearly missing the 'best' features.
         </p>
       </div>
       
       {/* Tier 2: High Contrast Blue */}
-      <div className="p-8 bg-blue-600 rounded-[2rem] shadow-xl shadow-blue-400/20 ring-8 ring-blue-50 flex flex-col scale-105 z-10">
-        <h4 className="font-black mb-3 text-white text-xs uppercase tracking-[0.2em] opacity-90">Tier 2: The Target</h4>
-        <p className="text-sm text-white leading-relaxed font-bold m-0 flex-grow">
+      <div className="p-8 bg-blue-600 rounded-[2rem] shadow-xl shadow-blue-400/30 ring-8 ring-blue-50 flex flex-col scale-105 z-10 min-h-[300px]">
+        <h4 className="font-black mb-4 text-white text-xs uppercase tracking-[0.2em]">Tier 2: The Target</h4>
+        <p className="text-sm text-white leading-relaxed font-black m-0 flex-grow">
           The Goldilocks zone. 70% of clients should choose this. It includes your most valuable standard features.
         </p>
       </div>
       
       {/* Tier 3: High Contrast Dark */}
-      <div className="p-8 bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-900/10 flex flex-col">
-        <h4 className="font-black mb-3 text-white text-xs uppercase tracking-[0.2em] opacity-80">Tier 3: The VIP</h4>
-        <p className="text-sm text-white leading-relaxed font-bold m-0 opacity-90 flex-grow">
+      <div className="p-8 bg-slate-900 rounded-[2rem] shadow-xl shadow-slate-900/20 flex flex-col min-h-[300px]">
+        <h4 className="font-black mb-4 text-white text-xs uppercase tracking-[0.2em]">Tier 3: The VIP</h4>
+        <p className="text-sm text-white leading-relaxed font-black m-0 flex-grow">
           The high-touch, premium option. Strategy calls, speed guarantees, and bonus features. Even if nobody buys it, it makes Tier 2 look like a bargain.
         </p>
       </div>
