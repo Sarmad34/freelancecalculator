@@ -1,4 +1,3 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { ProjectQuoteResult, Currency, CopyBlocks } from "../types";
 
@@ -11,10 +10,12 @@ export const generateProjectQuote = async (params: {
   currency: Currency;
 }): Promise<{ quote: ProjectQuoteResult; copy: CopyBlocks }> => {
   const apiKey = process.env.API_KEY;
+  
   if (!apiKey) {
-    throw new Error("Gemini API Key is missing. Please ensure it is provided in the environment.");
+    throw new Error("AI services are currently unavailable (Missing API Key). Please ensure the environment is correctly configured.");
   }
 
+  // Always use the process.env.API_KEY directly in the client constructor.
   const ai = new GoogleGenAI({ apiKey });
   const model = "gemini-3-flash-preview";
 
@@ -91,6 +92,7 @@ export const generateProjectQuote = async (params: {
     }
   });
 
+  // Accessing text directly as a property from GenerateContentResponse
   const text = response.text;
   if (!text) {
     throw new Error("No response from AI");

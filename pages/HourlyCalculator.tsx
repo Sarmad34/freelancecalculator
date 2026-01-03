@@ -1,32 +1,30 @@
 
-import React, { useState, useMemo, useEffect } from 'react';
-import { useParams, useSearchParams, Link, useLocation } from 'react-router-dom';
-import { Card, Input, Button, Disclaimer } from '../components/UI';
+import React, { useState, useMemo } from 'react';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
+import { Card, Input, Disclaimer } from '../components/UI';
 import { ROLE_DATA } from '../constants';
 import { Currency, HourlyRateState } from '../types';
 import { calculateHourlyRates, formatCurrency } from '../services/calculations';
-import { seoContent } from '../seo/seoContent';
+import { PAGES } from '../seo/seoContent';
 
 const HourlyCalculator: React.FC<{ currency: Currency }> = ({ currency }) => {
   const { role: roleSlug } = useParams();
-  const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const path = location.pathname.endsWith('/') ? location.pathname : `${location.pathname}/`;
-  const content = seoContent[path] || seoContent["/hourly-rate-calculator/"];
+  const [searchParams] = useSearchParams();
 
   const roleName = roleSlug ? roleSlug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : 'General Freelancer';
   const rolePreset = ROLE_DATA[roleName] || ROLE_DATA.default;
 
+  const content = PAGES['/hourly-rate-calculator/'];
+
   const [state, setState] = useState<HourlyRateState>({
     targetIncome: parseFloat(searchParams.get('income') || '') || rolePreset.income,
     expenses: parseFloat(searchParams.get('expenses') || '') || rolePreset.expenses,
-    weeksOff: parseFloat(searchParams.get('weeksOff') || '') || 4,
-    hoursPerWeek: parseFloat(searchParams.get('hoursPerWeek') || '') || 40,
-    utilization: parseFloat(searchParams.get('util') || '') || rolePreset.util,
-    profitMargin: parseFloat(searchParams.get('profit') || '') || 10,
-    taxReserve: parseFloat(searchParams.get('tax') || '') || 20,
-    platformFee: parseFloat(searchParams.get('pFee') || '') || 0,
+    weeksOff: 4,
+    hoursPerWeek: 40,
+    utilization: rolePreset.util,
+    profitMargin: 10,
+    taxReserve: 25,
+    platformFee: 0,
   });
 
   const results = useMemo(() => calculateHourlyRates(state), [state]);
@@ -36,39 +34,30 @@ const HourlyCalculator: React.FC<{ currency: Currency }> = ({ currency }) => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="prose prose-slate max-w-4xl mb-12">
-        <h1>{content.h1}</h1>
-        {content.intro.map((p, i) => <p key={i}>{p}</p>)}
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8 not-prose">
-          <div className="bg-slate-100 p-6 rounded-2xl border border-slate-200">
-            <h2 className="text-lg font-bold mb-4 mt-0">How to use this tool</h2>
-            <ul className="space-y-2">
-              {content.howItWorks.map((item, i) => <li key={i} className="flex gap-2 text-sm text-slate-600 font-medium">✅ {item}</li>)}
-            </ul>
-          </div>
-          <div className="bg-amber-50 p-6 rounded-2xl border border-amber-200">
-            <h2 className="text-lg font-bold mb-4 mt-0">Avoid these mistakes</h2>
-            <ul className="space-y-2">
-              {content.commonMistakes.map((item, i) => <li key={i} className="flex gap-2 text-sm text-amber-800 font-medium">❌ {item}</li>)}
-            </ul>
-          </div>
+    <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="mb-12">
+        <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
+          <Link to="/" className="hover:text-blue-600">Home</Link>
+          <span>/</span>
+          <span className="text-slate-900">{roleName} Pricing</span>
         </div>
+        <h1 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">{roleName} Hourly Rate Calculator</h1>
+        <p className="text-lg text-slate-600 max-w-2xl leading-relaxed">The professional standard for freelance pricing. Factor in utilization, overhead, and tax reserves for 2025.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20">
         <div className="lg:col-span-4 space-y-6">
-          <Card className="p-6">
-            <h3 className="text-lg font-bold mb-6 border-b pb-4">Business Goals</h3>
+          <Card className="p-8">
+            <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-8 pb-4 border-b">Income Targets</h3>
             <Input label="Target Annual Net Income" value={state.targetIncome} onChange={(v) => updateState('targetIncome', v)} suffix={currency} />
-            <Input label="Annual Business Expenses" value={state.expenses} onChange={(v) => updateState('expenses', v)} suffix={currency} />
-            <Input label="Weeks Off Per Year" value={state.weeksOff} onChange={(v) => updateState('weeksOff', v)} suffix="Weeks" />
-            <Input label="Working Hours Per Week" value={state.hoursPerWeek} onChange={(v) => updateState('hoursPerWeek', v)} suffix="Hours" />
+            <Input label="Business Expenses / Year" value={state.expenses} onChange={(v) => updateState('expenses', v)} suffix={currency} />
+            <Input label="Desired Weeks Off" value={state.weeksOff} onChange={(v) => updateState('weeksOff', v)} suffix="Weeks" />
+            <Input label="Max Hours / Week" value={state.hoursPerWeek} onChange={(v) => updateState('hoursPerWeek', v)} suffix="Hrs" />
           </Card>
-          <Card className="p-6">
-            <h3 className="text-lg font-bold mb-6 border-b pb-4">Adjustments</h3>
-            <Input label="Billable Utilization %" value={state.utilization} onChange={(v) => updateState('utilization', v)} suffix="%" />
+
+          <Card className="p-8">
+            <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-8 pb-4 border-b">Business Buffers</h3>
+            <Input label="Billable Utilization %" value={state.utilization} onChange={(v) => updateState('utilization', v)} suffix="%" help="Average: 60%" />
             <Input label="Profit Margin %" value={state.profitMargin} onChange={(v) => updateState('profitMargin', v)} suffix="%" />
             <Input label="Tax Reserve %" value={state.taxReserve} onChange={(v) => updateState('taxReserve', v)} suffix="%" />
           </Card>
@@ -76,41 +65,49 @@ const HourlyCalculator: React.FC<{ currency: Currency }> = ({ currency }) => {
 
         <div className="lg:col-span-8 space-y-6">
           <Disclaimer />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Card className="p-6 bg-blue-600 text-white border-none shadow-xl">
-              <span className="text-xs uppercase tracking-wider font-bold opacity-80">Recommended Hourly</span>
-              <div className="text-3xl font-black my-1">{formatCurrency(results.recommendedHourlyRate, currency)}</div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="p-8 bg-blue-600 text-white border-none shadow-2xl">
+              <span className="text-xs uppercase tracking-widest font-black opacity-70">Hourly Base Rate</span>
+              <div className="text-4xl font-black my-2">{formatCurrency(results.recommendedHourlyRate, currency)}</div>
+              <p className="text-[10px] uppercase font-bold opacity-60">Ideal for {roleName}s</p>
             </Card>
-            <Card className="p-6 bg-slate-900 text-white border-none shadow-xl">
-              <span className="text-xs uppercase tracking-wider font-bold opacity-80">Day Rate (8h)</span>
-              <div className="text-3xl font-black my-1">{formatCurrency(results.dayRate8, currency)}</div>
+            <Card className="p-8 bg-slate-900 text-white border-none shadow-xl">
+              <span className="text-xs uppercase tracking-widest font-black opacity-70">Day Rate (8h)</span>
+              <div className="text-4xl font-black my-2">{formatCurrency(results.dayRate8, currency)}</div>
+              <p className="text-[10px] uppercase font-bold opacity-60">Based on recommended rate</p>
             </Card>
-            <Card className="p-6 bg-white border-2 border-slate-100 shadow-xl">
-              <span className="text-xs uppercase tracking-wider font-bold text-slate-400">Min. Gross Target</span>
-              <div className="text-3xl font-black my-1">{formatCurrency(results.grossRequiredRevenue, currency)}</div>
+            <Card className="p-8 bg-white border-2 border-slate-100">
+              <span className="text-xs uppercase tracking-widest font-black text-slate-400">Min. Gross Revenue</span>
+              <div className="text-4xl font-black my-2 text-slate-900">{formatCurrency(results.grossRequiredRevenue, currency)}</div>
+              <p className="text-[10px] uppercase font-bold text-slate-400">Total yearly target</p>
             </Card>
           </div>
 
-          <div className="prose prose-slate max-w-none bg-white p-8 rounded-2xl border border-slate-200">
-             {content.sections.map((s, i) => (
-                <div key={i} className="mb-8 last:mb-0">
-                  <h2 className="text-xl font-bold mt-0 mb-3">{s.h2}</h2>
-                  <p className="text-slate-600 text-sm leading-relaxed">{s.p}</p>
-                </div>
-             ))}
-          </div>
+          {/* Long-form SEO content for AdSense approval */}
+          <div className="prose prose-slate max-w-none bg-white p-10 rounded-3xl border border-slate-100 shadow-sm">
+            <h2 className="mt-0">{content.h1} for Professionals</h2>
+            {content.intro.map((p, i) => <p key={i}>{p}</p>)}
+            
+            {content.sections.map((s, idx) => (
+              <div key={idx} className="mt-10">
+                <h3 className="font-bold text-slate-900">{s.h2}</h3>
+                {s.body.map((p, i) => <p key={i} className="text-sm">{p}</p>)}
+              </div>
+            ))}
 
-          <Card className="p-8">
-            <h3 className="text-xl font-bold mb-6">Frequently Asked Questions</h3>
-            <div className="space-y-6">
-              {content.faqs.map((faq, i) => (
-                <div key={i} className="border-b border-slate-100 last:border-0 pb-6">
-                  <h4 className="font-bold text-slate-900 mb-2">{faq.q}</h4>
-                  <p className="text-slate-600 text-sm">{faq.a}</p>
-                </div>
-              ))}
+            <div className="mt-12 p-8 bg-slate-50 rounded-2xl not-prose">
+              <h3 className="text-xl font-bold mb-6">Rate Calculation FAQs</h3>
+              <div className="space-y-6">
+                {content.faqs.map((faq, i) => (
+                  <div key={i}>
+                    <h4 className="font-bold text-slate-900 text-sm mb-2">{faq.q}</h4>
+                    <p className="text-slate-600 text-sm leading-relaxed">{faq.a}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </Card>
+          </div>
         </div>
       </div>
     </div>
