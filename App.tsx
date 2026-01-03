@@ -92,6 +92,7 @@ const Footer = () => (
           {TRUST_LINKS.map(link => (
             <li key={link.href}><Link to={link.href} className="hover:text-white transition-colors">{link.label}</Link></li>
           ))}
+          <li><a href="/sitemap.xml" target="_blank" className="hover:text-white transition-colors">Sitemap</a></li>
         </ul>
       </div>
     </div>
