@@ -10,8 +10,13 @@ export const generateProjectQuote = async (params: {
   complexity: string;
   currency: Currency;
 }): Promise<{ quote: ProjectQuoteResult; copy: CopyBlocks }> => {
-  // Rely exclusively on the environment variable as per platform standards
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  /**
+   * Directly using the provided API key to resolve the "API Key must be set" error 
+   * encountered during Vercel deployment, as requested.
+   */
+  const apiKey = 'AIzaSyDDvM1kg9Mf0kGL-nvkfvsrKOQkte0_Qi8';
+  
+  const ai = new GoogleGenAI({ apiKey });
   const model = "gemini-3-pro-preview";
 
   const prompt = `Act as a senior freelance business strategist. Generate a high-fidelity project proposal for a ${params.role} conducting a ${params.projectType} project.
