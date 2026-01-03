@@ -5,6 +5,7 @@ import { CURRENCIES } from './constants';
 import { Currency } from './types';
 import Home from './pages/Home';
 import HourlyCalculator from './pages/HourlyCalculator';
+import ProjectQuoteCalculator from './pages/ProjectQuoteCalculator';
 import DayRateArchitect from './pages/DayRateArchitect';
 import RetainerCalculator from './pages/RetainerCalculator';
 import OverheadCalculator from './pages/OverheadCalculator';
@@ -82,7 +83,7 @@ const Footer = () => (
       <div>
         <h4 className="text-white font-bold mb-6 text-sm uppercase tracking-widest">Expert Guides</h4>
         <ul className="space-y-3 text-sm">
-          {GUIDE_LINKS.slice(0, 5).map(link => (
+          {GUIDE_LINKS.map(link => (
             <li key={link.href}><Link to={link.href} className="hover:text-white transition-colors">{link.label}</Link></li>
           ))}
         </ul>
@@ -127,6 +128,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/hourly-rate-calculator" element={<HourlyCalculator currency={currency} />} />
             <Route path="/hourly-rate-calculator/:role" element={<HourlyCalculator currency={currency} />} />
+            <Route path="/project-proposal-builder" element={<ProjectQuoteCalculator currency={currency} />} />
             <Route path="/day-rate-architect" element={<DayRateArchitect currency={currency} />} />
             <Route path="/retainer-calculator" element={<RetainerCalculator currency={currency} />} />
             <Route path="/overhead-expense-calculator" element={<OverheadCalculator currency={currency} />} />

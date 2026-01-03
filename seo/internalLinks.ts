@@ -1,6 +1,7 @@
 
 export const TOOL_LINKS = [
   { href: "/hourly-rate-calculator", label: "Hourly Rate Calculator" },
+  { href: "/project-proposal-builder", label: "Project Proposal Builder" },
   { href: "/day-rate-architect", label: "Day Rate & Weekly Architect" },
   { href: "/retainer-calculator", label: "Retainer Calculator" },
   { href: "/overhead-expense-calculator", label: "Overhead Auditor" },
@@ -14,11 +15,6 @@ export const GUIDE_LINKS = [
   { href: "/guides/fixed-price-vs-hourly", label: "Fixed Price vs Hourly" },
   { href: "/guides/pricing-packages", label: "Pricing Packages That Sell" },
   { href: "/guides/retainers-for-freelancers", label: "Retainers for Freelancers" },
-  { href: "/guides/scope-creep-control", label: "Scope Creep Control" },
-  { href: "/guides/platform-fees-overview", label: "Platform Fees Overview" },
-  { href: "/guides/proposal-template", label: "Proposal Template Guide" },
-  { href: "/guides/invoicing-basics", label: "Invoicing Basics" },
-  { href: "/guides/raise-your-rates", label: "How to Raise Your Rates" },
 ] as const;
 
 export const TRUST_LINKS = [

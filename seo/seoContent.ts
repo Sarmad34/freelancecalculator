@@ -39,10 +39,7 @@ export const PAGES: Record<string, PageSEO> = {
     faqs: [
       { q: "Why do I need a 2026-specific calculator?", a: "The 2026 economy reflects higher SaaS overheads and shifting self-employment tax brackets. Standard calculators use outdated 2020 logic that leads to profit leakage." },
       { q: "What is the 'Utilization Gap'?", a: "Standard calculators assume you bill 40 hours a week. In reality, most high-performing freelancers only bill 22-26 hours. Our model accounts for this 40% non-billable gap." },
-      { q: "Is my financial data secure?", a: "100%. We use local browser processing. Your inputs never touch a server, ensuring total privacy." },
-      { q: "How should I handle 2026 inflation?", a: "We recommend a 5-7% annual 'Cost of Living Adjustment' (COLA) built directly into your profit margin. Our tools help you find the surplus needed to stay ahead of currency devaluation." },
-      { q: "What is a 'Safety Buffer' in pricing?", a: "A Safety Buffer is a 15-20% markup applied to fixed-price or day-rate quotes. It covers 'Scope Seep'—the small, unrecorded tasks that eat into your profit margins." },
-      { q: "Why is a Day Rate better than Hourly?", a: "Day rates decouple your income from minutes. They discourage client micromanagement and reward your efficiency. If a task takes 4 hours instead of 8, your day rate ensures you capture that expert efficiency as profit." }
+      { q: "Is my financial data secure?", a: "100%. We use local browser processing. Your inputs never touch a server, ensuring total privacy." }
     ],
     related: [...TOOL_LINKS, ...GUIDE_LINKS.slice(0, 3)],
     schemaHints: ["WebSite", "FinancialService", "FAQPage"],
@@ -62,12 +59,36 @@ export const PAGES: Record<string, PageSEO> = {
     schemaHints: ["FinancialService"],
     lastUpdated: "2026-01-01"
   },
+  "/project-proposal-builder": {
+    path: "/project-proposal-builder",
+    title: "AI Project Proposal Builder | Tiered Pricing Architect",
+    description: "Use AI to architect professional, tiered project quotes. Decouple your expertise from your hours and increase project ROI.",
+    h1: "Project Proposal Builder",
+    intro: ["Stop sending single-price quotes. Our AI Architect helps you build 'Good, Better, Best' packages that increase conversion and protect your time."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["FinancialService"],
+    lastUpdated: "2026-01-01"
+  },
   "/day-rate-architect": {
     path: "/day-rate-architect",
     title: "Day Rate & Weekly Architect | Freelance Value Pricing",
-    description: "Architect your transition from hourly billing to high-value day rates and weekly blocks. Calculate buffers for 2026 market standards.",
+    description: "Architect your transition from hourly billing to high-value day rates and weekly blocks.",
     h1: "Day Rate & Weekly Architect",
-    intro: ["Stop selling minutes and start selling results. Use this tool to model how day-rates and weekly 'Sprints' can double your effective hourly rate while simplifying client management."],
+    intro: ["Stop selling minutes and start selling results. Use this tool to model how day-rates and weekly 'Sprints' can double your effective hourly rate."],
+    sections: [],
+    faqs: [],
+    related: TOOL_LINKS,
+    schemaHints: ["FinancialService"],
+    lastUpdated: "2026-01-01"
+  },
+  "/retainer-calculator": {
+    path: "/retainer-calculator",
+    title: "Freelance Retainer Calculator | Recurring Revenue Planner",
+    description: "Calculate recurring revenue packages and monthly service fees to stabilize your freelance income.",
+    h1: "Retainer Architect",
+    intro: ["Kill the freelance rollercoaster. Transition your clients to monthly recurring revenue (MRR) with predictable service level agreements."],
     sections: [],
     faqs: [],
     related: TOOL_LINKS,
@@ -77,7 +98,7 @@ export const PAGES: Record<string, PageSEO> = {
   "/overhead-expense-calculator": {
     path: "/overhead-expense-calculator",
     title: "Freelance Overhead Auditor | Burn Rate Calculator",
-    description: "Audit your business expenses and identify SaaS sprawl. Calculate your business cost per billable hour.",
+    description: "Audit your business expenses and identify SaaS sprawl.",
     h1: "Overhead Auditor",
     intro: ["Hidden expenses are the silent killer of freelance profit. Our auditor identifies exactly how much your toolset costs you per hour worked."],
     sections: [],
@@ -89,7 +110,7 @@ export const PAGES: Record<string, PageSEO> = {
   "/platform-fee-calculator": {
     path: "/platform-fee-calculator",
     title: "Platform Fee Calculator | Upwork & Fiverr Margin Control",
-    description: "Calculate net pay after platform commissions. Reverse-calculate your quote to ensure you take home your desired rate.",
+    description: "Calculate net pay after platform commissions.",
     h1: "Platform Fee Auditor",
     intro: ["Platform commissions can eat 10-20% of your revenue instantly. This tool helps you quote higher to protect your bottom line."],
     sections: [],
@@ -101,7 +122,7 @@ export const PAGES: Record<string, PageSEO> = {
   "/tax-take-home-estimator": {
     path: "/tax-take-home-estimator",
     title: "Freelance Tax & Take-Home Estimator",
-    description: "Estimate your real take-home pay after tax reserves and wealth savings. Plan your 2026 financial freedom.",
+    description: "Estimate your real take-home pay after tax reserves and wealth savings.",
     h1: "Net Worth Architect",
     intro: ["Revenue is a vanity metric; take-home pay is sanity. Architect your savings and tax reserves with precision."],
     sections: [],
@@ -110,40 +131,68 @@ export const PAGES: Record<string, PageSEO> = {
     schemaHints: ["FinancialService"],
     lastUpdated: "2026-01-01"
   },
-  "/guides/fixed-price-vs-hourly": {
-    path: "/guides/fixed-price-vs-hourly",
-    title: "Fixed Price vs Hourly Billing | 2026 Strategic Guide",
-    description: "Compare fixed-price quotes with hourly billing. Learn why value-based pricing is the key to scaling your freelance profit in 2026.",
-    h1: "Fixed Price vs Hourly: Choosing Your Profit Model",
-    intro: ["Stop trading your life for an hourly rate. Learn how to architect fixed quotes that protect your time and reward your expertise."],
-    sections: [],
-    faqs: [],
-    related: TOOL_LINKS,
-    schemaHints: ["Article"],
-    lastUpdated: "2026-01-01"
+  "/about": {
+    path: "/about",
+    title: "About FreelanceCalc | Our Mission and Methodology",
+    description: "Learn about the philosophy behind our financial tools and our commitment to freelancer success.",
+    h1: "About the Project",
+    intro: ["We build tools for the independent economy."],
+    sections: [], faqs: [], related: TRUST_LINKS, schemaHints: ["AboutPage"], lastUpdated: "2026-01-01"
   },
-  "/guides/pricing-packages": {
-    path: "/guides/pricing-packages",
-    title: "How to Build Tiered Pricing Packages for Freelancers",
-    description: "Master the art of tiered pricing. Learn the 'Rule of Three' and how to build high-conversion project packages in 2026.",
-    h1: "High-Conversion Pricing Packages",
-    intro: ["Transform your service into a product. Use psychology-backed tiered pricing to close bigger deals with less resistance."],
-    sections: [],
-    faqs: [],
-    related: TOOL_LINKS,
-    schemaHints: ["Article"],
-    lastUpdated: "2026-01-01"
+  "/contact": {
+    path: "/contact",
+    title: "Contact Us | FreelanceCalc Support",
+    description: "Get in touch with our team for support or feedback.",
+    h1: "Connect With Us",
+    intro: ["We're here to help you scale."],
+    sections: [], faqs: [], related: TRUST_LINKS, schemaHints: ["ContactPage"], lastUpdated: "2026-01-01"
   },
-  "/guides/retainers-for-freelancers": {
-    path: "/guides/retainers-for-freelancers",
-    title: "Freelance Retainer Guide: Building Recurring Revenue",
-    description: "Learn how to pitch and structure monthly retainers. Kill the freelance rollercoaster with predictable recurring revenue in 2026.",
-    h1: "Retainers: The Path to Stable Revenue",
-    intro: ["The ultimate guide to recurring revenue. Learn how to sell availability and priority to your best clients."],
-    sections: [],
-    faqs: [],
-    related: TOOL_LINKS,
-    schemaHints: ["Article"],
-    lastUpdated: "2026-01-01"
+  "/privacy": {
+    path: "/privacy",
+    title: "Privacy Policy | Your Data Security",
+    description: "How we handle your privacy and ensure your financial data remains local.",
+    h1: "Privacy Policy",
+    intro: ["Your data never leaves your browser."],
+    sections: [], faqs: [], related: TRUST_LINKS, schemaHints: ["WebPage"], lastUpdated: "2026-01-01"
+  },
+  "/terms": {
+    path: "/terms",
+    title: "Terms of Use | FreelanceCalc",
+    description: "The rules for using our pricing tools and knowledge base.",
+    h1: "Terms of Service",
+    intro: ["Using our suite effectively and legally."],
+    sections: [], faqs: [], related: TRUST_LINKS, schemaHints: ["WebPage"], lastUpdated: "2026-01-01"
+  },
+  "/cookie-policy": {
+    path: "/cookie-policy",
+    title: "Cookie Policy | Transparency",
+    description: "How we use cookies to save your preferences locally.",
+    h1: "Cookie Policy",
+    intro: ["We use cookies for personalization."],
+    sections: [], faqs: [], related: TRUST_LINKS, schemaHints: ["WebPage"], lastUpdated: "2026-01-01"
+  },
+  "/disclaimer": {
+    path: "/disclaimer",
+    title: "Legal Disclaimer | Financial Accuracy",
+    description: "Our legal notice regarding financial estimations and professional advice.",
+    h1: "Disclaimer",
+    intro: ["Always consult a certified professional."],
+    sections: [], faqs: [], related: TRUST_LINKS, schemaHints: ["WebPage"], lastUpdated: "2026-01-01"
+  },
+  "/editorial-policy": {
+    path: "/editorial-policy",
+    title: "Editorial Policy | Content Standards",
+    description: "How we verify the accuracy of our financial models and guides.",
+    h1: "Editorial Policy",
+    intro: ["High standards for high-stakes finance."],
+    sections: [], faqs: [], related: TRUST_LINKS, schemaHints: ["WebPage"], lastUpdated: "2026-01-01"
+  },
+  "/sitemap": {
+    path: "/sitemap",
+    title: "Sitemap | Platform Directory",
+    description: "A complete visual map of the FreelanceCalc ecosystem.",
+    h1: "Platform Directory",
+    intro: ["Navigate all tools and guides easily."],
+    sections: [], faqs: [], related: [...TOOL_LINKS, ...GUIDE_LINKS], schemaHints: ["WebPage"], lastUpdated: "2026-01-01"
   }
 };
