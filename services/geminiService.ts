@@ -10,13 +10,13 @@ export const generateProjectQuote = async (params: {
   complexity: string;
   currency: Currency;
 }): Promise<{ quote: ProjectQuoteResult; copy: CopyBlocks }> => {
+  // Obtain API key exclusively from environment as required
   const apiKey = process.env.API_KEY;
   
   if (!apiKey) {
-    throw new Error("API_KEY_MISSING");
+    throw new Error("Missing AI Service Credentials. Please ensure the platform environment is correctly configured.");
   }
 
-  // Use a fresh instance right before the call to ensure the latest API Key is used
   const ai = new GoogleGenAI({ apiKey });
   const model = "gemini-3-pro-preview";
 
@@ -104,10 +104,6 @@ export const generateProjectQuote = async (params: {
     return JSON.parse(text);
   } catch (e: any) {
     console.error("Gemini API Error:", e);
-    // Handle the specific error string from the SDK if key is missing/invalid
-    if (e.message?.includes("API Key") || e.message?.includes("API_KEY") || e.message?.includes("403")) {
-      throw new Error("API_KEY_INVALID");
-    }
     throw new Error(e.message || "Failed to communicate with the pricing engine.");
   }
 };

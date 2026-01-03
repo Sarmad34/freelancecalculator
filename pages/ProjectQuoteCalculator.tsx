@@ -13,24 +13,6 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
   const [result, setResult] = useState<{ quote: ProjectQuoteResult; copy: CopyBlocks } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [selectedTier, setSelectedTier] = useState<string | null>(null);
-  const [hasKey, setHasKey] = useState(false);
-
-  // Check initial key status on mount and when window focus returns
-  useEffect(() => {
-    const checkKey = async () => {
-      /* @ts-ignore */
-      if (window.aistudio) {
-        /* @ts-ignore */
-        const selected = await window.aistudio.hasSelectedApiKey();
-        setHasKey(selected);
-      } else {
-        setHasKey(!!process.env.API_KEY);
-      }
-    };
-    checkKey();
-    window.addEventListener('focus', checkKey);
-    return () => window.removeEventListener('focus', checkKey);
-  }, []);
 
   const initialRole = useMemo(() => {
     if (roleSlug) {
@@ -56,35 +38,12 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
     }
   }, [roleSlug]);
 
-  const handleOpenKeySelector = async () => {
-    /* @ts-ignore */
-    if (window.aistudio) {
-      /* @ts-ignore */
-      await window.aistudio.openSelectKey();
-      // Per instructions, assume success after triggering the dialog to avoid race conditions
-      setHasKey(true); 
-      setError(null);
-    }
-  };
-
   const handleGenerate = async () => {
     setLoading(true);
     setError(null);
     setResult(null);
 
     try {
-      // 1. Check if platform says we have a key
-      /* @ts-ignore */
-      if (window.aistudio) {
-        /* @ts-ignore */
-        const isSelected = await window.aistudio.hasSelectedApiKey();
-        if (!isSelected) {
-          await handleOpenKeySelector();
-          // We must wait a tiny bit or just proceed as per guidelines
-        }
-      }
-
-      // 2. Attempt generation
       const data = await generateProjectQuote({
         role: form.role,
         projectType: form.projectType,
@@ -97,12 +56,7 @@ const ProjectQuoteCalculator: React.FC<{ currency: Currency }> = ({ currency }) 
       setSelectedTier('Standard');
     } catch (err: any) {
       console.error("Quote Generation Error:", err);
-      if (err.message === "API_KEY_MISSING" || err.message === "API_KEY_INVALID") {
-        setError("Cloud AI Key Required: Please click 'Select API Key' below to connect your billing-enabled Google Cloud project.");
-        setHasKey(false);
-      } else {
-        setError(err.message || "The AI engine encountered a temporary error. Please try again.");
-      }
+      setError(err.message || "The AI engine encountered a temporary error. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -159,13 +113,6 @@ ${copy.proposalSummary}
           </p>
         </div>
         <div className="flex gap-3">
-          <button 
-            onClick={handleOpenKeySelector}
-            className={`flex items-center gap-2 px-5 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-lg border-2 ${hasKey ? 'bg-green-50 text-green-700 border-green-200' : 'bg-blue-600 text-white border-blue-500 hover:bg-blue-700 hover:scale-105 active:scale-95 animate-pulse'}`}
-          >
-            <span className={`w-2.5 h-2.5 rounded-full ${hasKey ? 'bg-green-500' : 'bg-white'}`}></span>
-            {hasKey ? 'AI Connected' : 'Connect AI Engine'}
-          </button>
           {result && <CopyButton text={fullQuoteText} label="Copy Full Quote" />}
         </div>
       </div>
@@ -230,25 +177,9 @@ ${copy.proposalSummary}
                   <div className="p-2 bg-red-100 rounded-lg">
                     <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                   </div>
-                  <p className="text-xs font-black text-red-600 uppercase tracking-widest">Action Required</p>
+                  <p className="text-xs font-black text-red-600 uppercase tracking-widest">Error</p>
                 </div>
-                <p className="text-sm text-red-700 leading-relaxed font-bold mb-5">{error}</p>
-                <div className="flex flex-col gap-3">
-                  <button 
-                    onClick={handleOpenKeySelector} 
-                    className="w-full py-4 bg-blue-600 text-white text-xs font-black uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95"
-                  >
-                    Select Cloud API Key
-                  </button>
-                  <a 
-                    href="https://ai.google.dev/gemini-api/docs/billing" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-[10px] text-center text-slate-400 hover:text-slate-600 underline font-black uppercase tracking-widest"
-                  >
-                    Check Billing Requirements
-                  </a>
-                </div>
+                <p className="text-sm text-red-700 leading-relaxed font-bold">{error}</p>
               </div>
             )}
           </Card>
@@ -376,14 +307,6 @@ ${copy.proposalSummary}
               <p className="text-slate-500 max-w-sm mb-8 text-base font-medium leading-relaxed">
                 Enter your scope on the left. Our AI Architect will model three tiered price points based on market depth.
               </p>
-              {!hasKey && (
-                <button 
-                  onClick={handleOpenKeySelector}
-                  className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-black uppercase tracking-widest shadow-xl shadow-blue-200 hover:bg-blue-700 transition-all active:scale-95 animate-bounce"
-                >
-                  Step 1: Connect AI Engine
-                </button>
-              )}
             </div>
           )}
         </div>
