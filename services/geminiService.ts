@@ -11,22 +11,29 @@ export const generateProjectQuote = async (params: {
   currency: Currency;
 }): Promise<{ quote: ProjectQuoteResult; copy: CopyBlocks }> => {
   if (!process.env.API_KEY) {
-    throw new Error("AI services are currently unavailable (Missing API Key). Please ensure the environment is correctly configured.");
+    throw new Error("AI services require a valid API_KEY environment variable. Please check your deployment settings.");
   }
 
-  // Always use the process.env.API_KEY directly in the client constructor as per guidelines.
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const model = "gemini-3-flash-preview";
 
-  const prompt = `Generate a freelance project quote for a ${params.role} doing a ${params.projectType} project.
-  Estimated baseline hours: ${params.estimatedHours}. Hourly rate: ${params.hourlyRate}. Complexity: ${params.complexity}.
-  Currency: ${params.currency}.
+  const prompt = `Act as a senior freelance business strategist. Generate a high-fidelity project proposal for a ${params.role} conducting a ${params.projectType} project.
   
-  Provide three tiers of packages: Basic, Standard, and Premium.
-  The Standard package should be roughly based on the baseline hours and rate.
-  Include milestones with percentage splits (e.g. 50/50 or 40/30/30).
-  Include clear scope inclusions and exclusions.
-  Also provide a proposal summary and a professional client email.`;
+  CONTEXT:
+  - Estimated baseline labor: ${params.estimatedHours} hours
+  - Baseline billable rate: ${params.hourlyRate} ${params.currency}/hr
+  - Technical Complexity: ${params.complexity}
+  - Currency: ${params.currency}
+  - Year: 2026
+
+  REQUIREMENTS:
+  1. Return exactly 3 packages: 'Basic' (MVP focus), 'Standard' (Target value), and 'Premium' (Strategy + High-touch focus).
+  2. The Standard package price should be roughly hours * rate, plus a 15% value-pricing buffer. 
+  3. Ensure milestones are logical for the 2026 economy (e.g. upfront commitment fees).
+  4. Provide a professional client email that uses high-trust language (avoid salesy jargon).
+  5. Include 5 specific assumptions that protect the freelancer from scope creep.
+  
+  Format the output strictly as JSON. Ensure prices are integers.`;
 
   const response = await ai.models.generateContent({
     model,
@@ -91,11 +98,15 @@ export const generateProjectQuote = async (params: {
     }
   });
 
-  // Accessing text directly as a property from GenerateContentResponse
-  const text = response.text;
+  const text = response.text?.trim();
   if (!text) {
-    throw new Error("No response from AI");
+    throw new Error("The AI model returned an empty response. Please try again.");
   }
 
-  return JSON.parse(text);
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    console.error("Failed to parse AI JSON:", text);
+    throw new Error("Received an invalid response format from the AI engine. Please try again.");
+  }
 };
