@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { CURRENCIES } from './constants';
 import { Currency } from './types';
 import Home from './pages/Home';
@@ -88,8 +88,9 @@ const ScrollToTop = () => {
 const App = () => {
   const [currency, setCurrency] = useState<Currency>('USD');
 
+  // We use basename="/tools" to match your embedded directory structure requirement
   return (
-    <Router>
+    <Router basename="/tools">
       <ScrollToTop />
       <div className="min-h-screen flex flex-col">
         <Navbar currency={currency} setCurrency={setCurrency} />
