@@ -14,6 +14,7 @@ export const GUIDE_LINKS = [
   { href: "/guides/fixed-price-vs-hourly", label: "Fixed Price vs Hourly" },
   { href: "/guides/pricing-packages", label: "Pricing Packages That Sell" },
   { href: "/guides/retainers-for-freelancers", label: "Retainers for Freelancers" },
+  { href: "/guides/international-invoicing-tax", label: "International Invoicing & Tax" },
 ] as const;
 
 export const TRUST_LINKS = [

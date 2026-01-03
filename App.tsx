@@ -22,6 +22,7 @@ import GuideUtilization from './pages/GuideUtilization';
 import GuideFixedVsHourly from './pages/GuideFixedVsHourly';
 import GuidePackages from './pages/GuidePackages';
 import GuideRetainers from './pages/GuideRetainers';
+import GuideInternational from './pages/GuideInternational';
 import Sitemap from './pages/Sitemap';
 import { SEO } from './components/SEO';
 import { TRUST_LINKS, TOOL_LINKS, GUIDE_LINKS } from './seo/internalLinks';
@@ -144,6 +145,7 @@ const App = () => {
             <Route path="/guides/fixed-price-vs-hourly" element={<GuideFixedVsHourly />} />
             <Route path="/guides/pricing-packages" element={<GuidePackages />} />
             <Route path="/guides/retainers-for-freelancers" element={<GuideRetainers />} />
+            <Route path="/guides/international-invoicing-tax" element={<GuideInternational />} />
             <Route path="/sitemap" element={<Sitemap />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>

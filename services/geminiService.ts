@@ -10,14 +10,8 @@ export const generateProjectQuote = async (params: {
   complexity: string;
   currency: Currency;
 }): Promise<{ quote: ProjectQuoteResult; copy: CopyBlocks }> => {
-  /**
-   * Directly using the provided API key to resolve the "API Key must be set" error 
-   * encountered during Vercel deployment, as requested.
-   */
-  const apiKey = 'AIzaSyDDvM1kg9Mf0kGL-nvkfvsrKOQkte0_Qi8';
-  
-  const ai = new GoogleGenAI({ apiKey });
-  const model = "gemini-3-pro-preview";
+  // Always use process.env.API_KEY directly for initialization as per guidelines.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   const prompt = `Act as a senior freelance business strategist. Generate a high-fidelity project proposal for a ${params.role} conducting a ${params.projectType} project.
   
@@ -35,8 +29,10 @@ export const generateProjectQuote = async (params: {
   4. Provide a professional client email. Use [Package Name] and [Price] as placeholders.`;
 
   try {
+    // Using gemini-3-pro-preview for complex text reasoning tasks.
+    // Query GenAI with both the model name and prompt in a single call as required.
     const response = await ai.models.generateContent({
-      model,
+      model: 'gemini-3-pro-preview',
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -98,6 +94,7 @@ export const generateProjectQuote = async (params: {
       }
     });
 
+    // Access the .text property directly instead of calling it as a function.
     const text = response.text;
     if (!text) throw new Error("The AI returned an empty response.");
     return JSON.parse(text);

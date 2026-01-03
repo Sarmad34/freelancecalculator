@@ -9,8 +9,6 @@ export const Card: React.FC<{ children: React.ReactNode; className?: string; var
     outline: "bg-transparent border-slate-200 border-dashed"
   };
 
-  // Prevent background conflicts: if className contains a background utility, 
-  // we strip the default bg-white from the variant string.
   let activeVariantClasses = variantClasses[variant];
   if (className.includes('bg-')) {
     activeVariantClasses = activeVariantClasses.replace('bg-white', '');
@@ -19,6 +17,29 @@ export const Card: React.FC<{ children: React.ReactNode; className?: string; var
   return (
     <div className={`${baseClasses} ${activeVariantClasses} ${className}`}>
       {children}
+    </div>
+  );
+};
+
+export const FAQSection: React.FC<{ faqs: Array<{q: string, a: string}>, className?: string }> = ({ faqs, className = "" }) => {
+  if (!faqs || faqs.length === 0) return null;
+  return (
+    <div className={`mt-20 border-t border-slate-200 pt-20 ${className}`}>
+      <h3 className="text-3xl font-black text-slate-900 mb-10 tracking-tight text-center md:text-left">Frequently Asked Questions</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+        {faqs.map((faq, i) => (
+          <div key={i} className="group">
+            <h4 className="text-lg font-bold text-slate-900 mb-3 flex items-start gap-3">
+              <span className="text-blue-600 font-black text-xl leading-none">Q.</span>
+              {faq.q}
+            </h4>
+            <div className="flex items-start gap-3">
+              <span className="text-transparent font-black text-xl leading-none select-none">Q.</span>
+              <p className="text-slate-600 text-sm leading-relaxed font-medium">{faq.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
@@ -33,7 +54,6 @@ export const CopyButton: React.FC<{ text: string; label?: string }> = ({ text, l
         await navigator.clipboard.writeText(text);
         setCopied(true);
       } else {
-        // Fallback for non-secure contexts
         const textArea = document.createElement("textarea");
         textArea.value = text;
         textArea.style.position = "fixed";

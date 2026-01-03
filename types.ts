@@ -43,6 +43,9 @@ export interface HourlyRateState {
   profitMargin: number;
   taxReserve: number;
   platformFee: number;
+  role: string;
+  freelancerCountry: string;
+  clientCountry: string;
 }
 
 export interface OverheadState {
