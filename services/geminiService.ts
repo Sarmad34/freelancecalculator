@@ -10,14 +10,8 @@ export const generateProjectQuote = async (params: {
   complexity: string;
   currency: Currency;
 }): Promise<{ quote: ProjectQuoteResult; copy: CopyBlocks }> => {
-  // Obtain API key exclusively from environment as required
-  const apiKey = process.env.API_KEY;
-  
-  if (!apiKey) {
-    throw new Error("Missing AI Service Credentials. Please ensure the platform environment is correctly configured.");
-  }
-
-  const ai = new GoogleGenAI({ apiKey });
+  // Rely exclusively on the environment variable as per platform standards
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   const model = "gemini-3-pro-preview";
 
   const prompt = `Act as a senior freelance business strategist. Generate a high-fidelity project proposal for a ${params.role} conducting a ${params.projectType} project.
