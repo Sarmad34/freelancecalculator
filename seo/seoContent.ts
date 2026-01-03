@@ -59,18 +59,6 @@ export const PAGES: Record<string, PageSEO> = {
     schemaHints: ["FinancialService"],
     lastUpdated: "2026-01-01"
   },
-  "/project-proposal-builder": {
-    path: "/project-proposal-builder",
-    title: "AI Project Proposal Builder | Tiered Pricing Architect",
-    description: "Use AI to architect professional, tiered project quotes. Decouple your expertise from your hours and increase project ROI.",
-    h1: "Project Proposal Builder",
-    intro: ["Stop sending single-price quotes. Our AI Architect helps you build 'Good, Better, Best' packages that increase conversion and protect your time."],
-    sections: [],
-    faqs: [],
-    related: TOOL_LINKS,
-    schemaHints: ["FinancialService"],
-    lastUpdated: "2026-01-01"
-  },
   "/day-rate-architect": {
     path: "/day-rate-architect",
     title: "Day Rate & Weekly Architect | Freelance Value Pricing",

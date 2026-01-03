@@ -5,7 +5,6 @@ import { CURRENCIES } from './constants';
 import { Currency } from './types';
 import Home from './pages/Home';
 import HourlyCalculator from './pages/HourlyCalculator';
-import ProjectQuoteCalculator from './pages/ProjectQuoteCalculator';
 import DayRateArchitect from './pages/DayRateArchitect';
 import RetainerCalculator from './pages/RetainerCalculator';
 import OverheadCalculator from './pages/OverheadCalculator';
@@ -128,7 +127,6 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/hourly-rate-calculator" element={<HourlyCalculator currency={currency} />} />
             <Route path="/hourly-rate-calculator/:role" element={<HourlyCalculator currency={currency} />} />
-            <Route path="/project-proposal-builder" element={<ProjectQuoteCalculator currency={currency} />} />
             <Route path="/day-rate-architect" element={<DayRateArchitect currency={currency} />} />
             <Route path="/retainer-calculator" element={<RetainerCalculator currency={currency} />} />
             <Route path="/overhead-expense-calculator" element={<OverheadCalculator currency={currency} />} />
